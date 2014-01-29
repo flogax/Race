@@ -16,5 +16,9 @@ console.info("Connecting to %s", dbUri);
 mongoose.connect(dbUri, options);
 
 module.exports.User = require("./user");
-module.exports.Presentation = require("./presentation");
-module.exports.Note = require("./note");
+module.exports.Deck = require("./deck");
+module.exports.Edition = require("./edition");
+module.exports.Card = require("./card");
+module.exports.Color = require("./color");
+module.exports.News = require("./news");
+module.exports.Typ = require("./typ");
