@@ -6,3 +6,25 @@ body {
 a {
   color: #00B7FF;
 }
+
+div.regeln p {
+    padding-left: 10px;
+    font-size: 0.9em;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+div.links {
+    position: fixed;
+    top: 70px;
+    left: 10px;
+    border-radius: 10px;
+    min-height: 200px;
+    background-color: #808080;
+}
+
+div.links ul {
+    list-style: none;
+}
