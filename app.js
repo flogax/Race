@@ -6,8 +6,12 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var api = require('./routes/api');
 var http = require('http');
 var path = require('path');
+var database = require('./database');
+
+var News = database.News;
 
 var app = express();
 
@@ -32,10 +36,14 @@ app.get('/', routes.index);
 app.get('/race/*', routes.index);
 app.get('/users', user.list);
 
-app.get('/api/news', routes.news);
-app.post('/api/news/:newsId');
-app.put('/api/news/:newsId');
-app.delete('/api/news/:newsId');
+app.get('/api/news', api.findAll(News));
+app.get('/api/news/:id', api.find(News));
+app.post('/api/news/:id', api.add(News));
+app.put('/api/news/:id', api.update(News));
+app.delete('/api/news/:id', api.remove(News));
+app.all('/api/news', api.listMethods("GET"));
+app.all('/api/news', api.listMethods("GET POST PUT DELETE"));
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

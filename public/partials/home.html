@@ -1,11 +1,15 @@
 <div class="col-md-12">
     <div class="jumbotron">
-        <h1>Race</h1>
-        <p>Projekt von Florian Hotarek</p>
-        <h2>Mitwirkende zur Zeit</h2>
-        <ul>
-            <li>Florian Hotarek</li>
+        <h1>Race News Page</h1>
 
-        </ul>
+        <div ng-repeat="news in newsAll">
+            <div>
+                <h2><span ng-bind="news.header"></span>
+                    <small><span ng-bind="news.date | date:'dd-MM-yyyy'"></span></small>
+                </h2>
+                <p ng-bind="news.message"></p>
+            </div>
+        </div>
+
     </div>
 </div>

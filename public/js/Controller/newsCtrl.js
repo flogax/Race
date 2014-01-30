@@ -1,3 +1,6 @@
-/**
- * Created by flo on 30.01.14.
- */
+app.controller('newsCtrl', function ($scope, News) {
+    'use strict';
+
+    $scope.newsAll = News.getAll();
+
+});

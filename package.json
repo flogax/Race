@@ -9,6 +9,7 @@
     "express": "3.4.8",
       "jshtml": "*",
       "q": "*",
-      "mongoose": "*"
+      "mongoose": "*",
+      "bcryptjs": "*"
   }
 }

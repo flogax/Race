@@ -1,4 +1,4 @@
-common.factory('Note', function ($resource) {
+common.factory('News', function ($resource) {
     'use strict';
 
     return $resource('/api/news/:id',
