@@ -5,16 +5,18 @@
     <link rel="stylesheet" href="/public/lib/css/bootstrap.css">
     <link rel="stylesheet" href="/public/lib/css/bootstrap-theme.css">
     <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/toaster.css">
     <title>Race</title>
 </head>
 
 <body>
 <noscript style="color:red;font-size: 2em">Please enable JavaScript, because this site requires it.</noscript>
+<toaster-container></toaster-container>
 
 <header class="navbar navbar-inverse navbar-fixed-top" ng-hide="hideNavBar">
     <div>
         <div class="navbar-header">
-        <a class="navbar-brand" href="/">Race<sup>&nbsp[beta]</sup></a>
+            <a class="navbar-brand" href="/">Race<sup>&nbsp[beta]</sup></a>
         </div>
         <nav class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -35,6 +37,9 @@
 <script src="/public/lib/angular.js"></script>
 <script src="/public/lib/angular-resource.js"></script>
 <script src="/public/lib/angular-route.js"></script>
+<script src="/public/lib/angular-animate.js"></script>
+<script src="/public/lib/toaster.js"></script>
+<script src="/public/lib/jquery.autosize.js"></script>
 
 <script src="/public/js/app.js"></script>
 <script src="/public/js/common.js"></script>

@@ -38,11 +38,11 @@ app.get('/users', user.list);
 
 app.get('/api/news', api.findAll(News));
 app.get('/api/news/:id', api.find(News));
-app.post('/api/news/:id', api.add(News));
+app.post('/api/news', api.add(News));
 app.put('/api/news/:id', api.update(News));
 app.delete('/api/news/:id', api.remove(News));
-app.all('/api/news', api.listMethods("GET"));
-app.all('/api/news', api.listMethods("GET POST PUT DELETE"));
+app.all('/api/news', api.listMethods("GET POST"));
+app.all('/api/news/:id', api.listMethods("GET PUT DELETE"));
 
 
 http.createServer(app).listen(app.get('port'), function(){

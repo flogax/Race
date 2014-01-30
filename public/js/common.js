@@ -1,1 +1,1 @@
-var common = angular.module('common', ['ngResource']);
+var common = angular.module('common', ['ngResource', 'toaster']);
