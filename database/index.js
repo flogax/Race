@@ -5,7 +5,7 @@ var options = { user: "", password: "" };
 
 mongoose.connection.on("open", function () {
     console.info("Connection opened to mongodb at %s", dbUri);
-    process.emit("pr-dbOpen");
+    process.emit("rtc-DBOpen");
 });
 mongoose.connection.on("error", function (err) {
     console.error("Connection to mongodb failed: %s\nnode is shutting down...", err);
