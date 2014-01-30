@@ -7,7 +7,7 @@ var newsSchema = new mongoose.Schema({
 }, { toObject: { virtuals: true }, toJSON: { virtuals: true }});
 
 newsSchema.methods.dateMeUp = function () {
-    console.info(this);
+    console.info(this.header + ":" + this.message);
 };
 
 module.exports = mongoose.model("News", newsSchema);

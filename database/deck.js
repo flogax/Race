@@ -1,4 +1,5 @@
-var mongoose = require("mongoose");
+var mongoose = require("mongoose"),
+    Schema = mongoose.Schema;
 
 var deckSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -6,7 +7,10 @@ var deckSchema = new mongoose.Schema({
     raceCount: {type: Number, required: true },
     info: {type: String},
     cards: [
-        {type: Schema.Types.ObjectId, ref: 'Card'}
+        {
+            card: {type: Schema.Types.ObjectId, ref: 'Card'},
+            stk: Number
+        }
     ]
 }, { toObject: { virtuals: true }, toJSON: { virtuals: true }});
 

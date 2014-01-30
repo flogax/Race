@@ -1,4 +1,5 @@
-var mongoose = require("mongoose");
+var mongoose = require("mongoose"),
+    Schema = mongoose.Schema;
 
 var editionSchema = new mongoose.Schema({
     name: {type: String, required: true},
