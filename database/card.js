@@ -3,11 +3,11 @@ var mongoose = require("mongoose"),
 
 var cardSchema = new mongoose.Schema({
     name: {type: String, require: true},
-    typ: {type: Schema.Types.ObjectId, ref: 'Typ', required: true},// SOll eigentlich über die Db Typ gesetzt werden
+    typ: String,//{type: Schema.Types.ObjectId, ref: 'Typ', required: true},// SOll eigentlich über die Db Typ gesetzt werden
     color: [
         {type: Schema.Types.ObjectId, ref: 'Color'}
     ],//SOll eigentlich über die Db color gesetzt werden
-    cost: {type: Number, required: true},
+    cost: {type: Number, required: true, default: 0},
     live: Number,
     atk: Number,
     ver: Number,

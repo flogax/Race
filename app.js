@@ -12,6 +12,7 @@ var path = require('path');
 var database = require('./database');
 
 var News = database.News;
+var User = database.User;
 
 var app = express();
 
@@ -44,6 +45,13 @@ app.delete('/api/news/:id', api.remove(News));
 app.all('/api/news', api.listMethods("GET POST"));
 app.all('/api/news/:id', api.listMethods("GET PUT DELETE"));
 
+app.get('/api/user', api.findAll(User));
+app.get('/api/user/:id', api.find(User));
+app.post('/api/user', api.add(User));
+app.put('/api/user/:id', api.update(User));
+app.delete('/api/user/:id', api.remove(User));
+app.all('/api/user', api.listMethods("GET POST"));
+app.all('/api/user/:id', api.listMethods("GET PUT DELETE"));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
