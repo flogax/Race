@@ -7,14 +7,15 @@ common.service('AuthService', function ($q, $http, $location, $rootScope) {
 
     var roles = {
         user: 1,    // 001
-        speaker: 2, // 010
+        op: 2,      // 010
         admin: 4    // 100
     };
 
     var accessLevels = {
-        speaker: roles.admin | roles.speaker,
-        registered: roles.admin | roles.speaker | roles.user,
-        public: roles.admin | roles.speaker | roles.user
+        admin: roles.admin,
+        operrator: roles.admin | roles.op,
+        registered: roles.admin | roles.op | roles.user,
+        public: roles.admin | roles.op | roles.user
     };
 
     this.user = null;
@@ -24,16 +25,12 @@ common.service('AuthService', function ($q, $http, $location, $rootScope) {
 
         var data = { username: username, password: password };
 
-        $http.post("/api/v1/login", JSON.stringify(data))
+        $http.post("/api/login", JSON.stringify(data))
             .success(function (data, status) {
                 if (status === 200 || status === 204) {
                     that.user = data;
                     $rootScope.$broadcast('login', that.user);
                     deferred.resolve(data);
-
-                    // redirect to cached route or presentation overview
-                    // var route = routeCache || '/presentations';
-                    // $location.path(route);
                 }
                 deferred.reject(data);
             }).error(function (data) {
@@ -47,7 +44,7 @@ common.service('AuthService', function ($q, $http, $location, $rootScope) {
     this.revokeAuth = function () {
         var deferred = $q.defer();
 
-        $http.post("/api/v1/logout")
+        $http.post("/api/logout")
             .success(function (data, status) {
                 if (status === 200 || status === 204) {
                     that.user = null;
@@ -65,7 +62,7 @@ common.service('AuthService', function ($q, $http, $location, $rootScope) {
     this.checkAuth = function () {
         var deferred = $q.defer();
 
-        $http.get("/api/v1/ping")
+        $http.get("/api/ping")
             .success(function (data, status) {
                 if (status === 200 || status === 204) {
                     if (!that.user) {
@@ -120,9 +117,9 @@ common.service('AuthService', function ($q, $http, $location, $rootScope) {
     $rootScope.$on('$routeChangeStart', function (event, next) {
         that.checkAuth()
             .then(function () {
-                changeRoute('/presentations');
+                changeRoute('/home');
             }).catch(function () {
-                changeRoute('/login');
+                changeRoute('/home');
             });
 
         function changeRoute(route) {
