@@ -1,0 +1,118 @@
+<div class="col-md-12">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-default">Bild Upload</button>
+                <span>test/test/test.png</span><br/>
+
+                <form name="form" class="form-horizontal" novalidate ng-submit="login()">
+                    <input class="form-control" type="text" name="cardname" placeholder="Kartenname"
+                           ng-model="nCard.name" required>
+                    <input class="form-control" type="NUMBER" min="0" ng-model="nCard.cost" placeholder="Kosten"
+                           required>
+
+                    <!-- Editon Auswahl -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Editions <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="edi in editions"><a href="" ng-click="nCard.edition = edit"><span
+                                    ng-bind="edi.name"></span></a></li>
+                        </ul>
+                    </div>
+                    <input class="form-control" type="text" name="cardedition" placeholder="Edition"
+                           ng-model="nCard.edition.name" required disabled>
+                    <!-- Typ Auswahl -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Typ:<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="typ in typs"><a href="" ng-click="nCard.typ = typ"><span
+                                    ng-bind="typ.name"></span></a></li>
+                        </ul>
+
+                    </div>
+                    <input class="form-control" type="text" name="cardtyp" placeholder="Karten Typ"
+                           ng-model="nCard.typ.name" required disabled>
+
+                    <!-- Color Auswahl -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Colors <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="color in colors"><a href="" ng-click="nCard.color = color"><span
+                                    ng-bind="color.name"></span></a></li>
+                        </ul>
+                    </div>
+                    <input class="form-control" type="text" name="cardcolor" placeholder="Karten Farbe"
+                           ng-model="nCard.color.name" required disabled>
+                    <textarea class="form-control" ng-model="nCard.ability"
+                              placeholder="Fähigkeit der Karte"></textarea>
+
+
+                    <!-- Typ Spezifisch -->
+                    <div ng-show="checkTyp('atk',nCard.typ.name)">
+                        <input class="form-control" type="NUMBER" min="0" ng-model="nCard.atk" placeholder="ATK"
+                               required>
+                        <input class="form-control" type="NUMBER" min="0" ng-model="nCard.ver" placeholder="VER"
+                               required>
+                    </div>
+
+                    <div ng-show="checkTyp('live',nCard.typ.name)">
+                        <input class="form-control" type="NUMBER" min="0" ng-model="nCard.live" placeholder="Leben"
+                               required>
+                    </div>
+                    <div ng-init="hidden = false">
+                        <span class="glyphicon glyphicon-plus-sign" ng-click="hidden = true" ng-hide="hidden"></span>
+                        <span class="glyphicon glyphicon-minus-sign" ng-click="hidden = false" ng-show="hidden"></span>
+                        <!-- Zusatz informationen -->
+                        <div ng-show="hidden">
+                            <textarea class="form-control" ng-model="nCard.text"
+                                      placeholder="Text, wird auf der Karte angezeigt"></textarea>
+                            <textarea class="form-control" ng-model="nCard.info"
+                                      placeholder="Zusatzinformation, wird nicht auf der Karte Angezeigt"></textarea>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group has-error">
+                        <span class="help-block" ng-bind="errorMsg"></span>
+                    </div>
+                    <button class="btn btn-danger" type="reset" ng-click="errorMsg='';reset();" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary pull-right" type="submit"
+                            ng-disabled="form.$invalid || !form.$dirty">Login
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="card"></div>
+            </div>
+        </div>
+        <div class="row tabl">
+            <div class="row tabl-head">
+                <div class="col-md-3"><h4>Name</h4></div>
+                <div class="col-md-1"><h4>Kosten</h4></div>
+                <div class="col-md-2"><h4>Leben</h4></div>
+                <div class="col-md-2"><h4>ATK</h4></div>
+                <div class="col-md-2"><h4>VER</h4></div>
+                <div class="col-md-2"><h4>HIDDEN</h4></div>
+            </div>
+            <div class="row hov tabl-body" ng-repeat="card in cards">
+                <div class="col-md-3"><span ng-bind="card.name"></span></div>
+                <div class="col-md-1"><span ng-bind="checkCost(card.cost)"></span></div>
+                <div class="col-md-2"><span ng-bind="checkLive(card.live)"></span></div>
+                <div class="col-md-2"><span ng-bind="checkAtk(card.atk)"></span></div>
+                <div class="col-md-2"><span ng-bind="checkVer(card.ver)"></span></div>
+                <div class="col-md-2"><span ng-bind="card.hidden"></span></div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

@@ -4,7 +4,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var api = require('./routes/api');
 var auth = require('./auth');
 var http = require('http');
@@ -13,6 +12,11 @@ var database = require('./database');
 
 var News = database.News;
 var User = database.User;
+var Card = database.Card;
+var Deck = database.Deck;
+var Typ = database.Typ;
+var Color = database.Color;
+var Edition = database.Edition;
 
 var app = express();
 
@@ -46,12 +50,12 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/race/*', routes.index);
-app.get('/users', user.list);
-
+//Login Service
 app.post('/api/login', auth.authenticate);
 app.post('/api/logout', auth.revokeAuth);
 app.get('/api/ping', auth.check);
 
+//News Service
 app.get('/api/news', api.findAll(News));
 app.get('/api/news/:id', api.find(News));
 app.post('/api/news', api.add(News));
@@ -60,6 +64,7 @@ app.delete('/api/news/:id', api.remove(News));
 app.all('/api/news', api.listMethods("GET POST"));
 app.all('/api/news/:id', api.listMethods("GET PUT DELETE"));
 
+//User Service
 app.get('/api/user', api.findAll(User));
 app.get('/api/user/:id', api.find(User));
 app.post('/api/user', api.add(User));
@@ -67,6 +72,33 @@ app.put('/api/user/:id', api.update(User));
 app.delete('/api/user/:id', api.remove(User));
 app.all('/api/user', api.listMethods("GET POST"));
 app.all('/api/user/:id', api.listMethods("GET PUT DELETE"));
+
+//Card Service
+app.get('/api/card', api.findAll(Card));
+app.get('/api/card/:id', api.find(Card));
+app.post('/api/card', api.add(Card));
+app.put('/api/card/:id', api.update(Card));
+app.delete('/api/card/:id', api.remove(Card));
+app.all('/api/card', api.listMethods("GET POST"));
+app.all('/api/card/:id', api.listMethods("GET PUT DELETE"));
+
+//Deck Service
+app.get('/api/deck', api.findAll(Deck));
+app.get('/api/deck/:id', api.find(Deck));
+app.post('/api/deck', api.add(Deck));
+app.put('/api/deck/:id', api.update(Deck));
+app.delete('/api/deck/:id', api.remove(Deck));
+app.all('/api/deck', api.listMethods("GET POST"));
+app.all('/api/deck/:id', api.listMethods("GET PUT DELETE"));
+
+//Color Service
+app.get('/api/color', api.findAll(Color));
+
+//Typ Service
+app.get('/api/typ', api.findAll(Typ));
+
+//Edition Service
+app.get('/api/edition', api.findAll(Edition));
 
 
 http.createServer(app).listen(app.get('port'), function(){

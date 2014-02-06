@@ -22,7 +22,7 @@
             <ul class="nav navbar-nav">
                 <li ng-class="{active: isActive('/race/home')}"><a href="/race/home">Startseite</a></li>
                 <li ng-class="{active: isActive('/race/rules')}"><a href="/race/rules">Regelwerk</a></li>
-                <li ng-class="{active: isActive('/race/test')}" ng-show="auth.user"><a href="/">Karten</a></li>
+                <li ng-class="{active: isActive('/race/deck')}"><a href="/race/cards">Karten</a></li>
                 <li ng-class="{active: isActive('/race/test')}" ng-show="auth.user"><a href="/">Decks</a></li>
             </ul>
             <p class="navbar-text navbar-right opac-null" ng-show="auth.user">
@@ -88,8 +88,14 @@
 <script src="/public/js/common.js"></script>
 <script src="/public/js/Service/news.js"></script>
 <script src="/public/js/Service/user.js"></script>
+<script src="/public/js/Service/deck.js"></script>
+<script src="/public/js/Service/card.js"></script>
+<script src="/public/js/Service/color.js"></script>
+<script src="/public/js/Service/typ.js"></script>
+<script src="/public/js/Service/edition.js"></script>
 <script src="/public/js/Service/authService.js"></script>
 <script src="/public/js/Controller/newsCtrl.js"></script>
+<script src="/public/js/Controller/cardCtrl.js"></script>
 <script src="/public/js/Controller/loginCtrl.js"></script>
 <script src="/public/js/Controller/menuCtrl.js"></script>
 
