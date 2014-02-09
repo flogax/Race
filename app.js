@@ -21,7 +21,7 @@ var Edition = database.Edition;
 var app = express();
 
 var sessionOptions = {
-    secret: "9iabezjdon1k1co5",
+    secret: "9iabezjcon1k3co6",
     proxy: false,
     cookie: {
         maxAge: 1000 * 8640000,
@@ -74,7 +74,7 @@ app.all('/api/user', api.listMethods("GET POST"));
 app.all('/api/user/:id', api.listMethods("GET PUT DELETE"));
 
 //Card Service
-app.get('/api/card', api.findAll(Card));
+app.get('/api/card', api.findAllCards(Card));
 app.get('/api/card/:id', api.find(Card));
 app.post('/api/card', api.add(Card));
 app.put('/api/card/:id', api.update(Card));

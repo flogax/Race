@@ -6,6 +6,20 @@ var bcrypt = require("bcryptjs");
 var SALT_WORK_FACTOR = 10;
 
 var api = {
+    findAllCards: function (Card) {
+        return function (req, res, next) {
+            Card.find({}).populate('typ edition color').exec(function (err, data) {
+                if (err) {
+                    console.error("Error finding %ss: %j", Model.modelName, err);
+                    return res.json(500, err);
+                } else if (!data) {
+                    return res.json(404);
+                }
+                res.json(data);
+            });
+        }
+    },
+
     findAll: function (model) {
         return function (req, res, next) {
             model.find({}, function (err, data) {
@@ -17,7 +31,7 @@ var api = {
                     return res.json(404);
                 }
                 res.json(data);
-            });
+            })
         };
     },
 

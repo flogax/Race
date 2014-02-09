@@ -14,10 +14,11 @@ var cardSchema = new mongoose.Schema({
     atk: Number,
     ver: Number,
     ability: String,
+    rarity: {type: String, enum: ['commen', 'uncommen', 'rar', 'epic'], default: 'commen'},
     text: String,
     info: String,
     pic: String,
-    edition: {type: Schema.Types.ObjectId, ref: 'Edition', required: true}, //SOll eigentlich über die Db Edition gesetzt werden
+    edition: {type: Schema.Types.ObjectId, ref: 'Edition', required: true},
     creationDate: Date,
     relaseDate: Date,
     changeDate: Date,

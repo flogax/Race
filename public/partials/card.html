@@ -5,26 +5,49 @@
                 <button class="btn btn-default">Bild Upload</button>
                 <span>test/test/test.png</span><br/>
 
-                <form name="form" class="form-horizontal" novalidate ng-submit="login()">
+                <form name="form" class="form-horizontal" novalidate ng-submit="newCard()">
                     <input class="form-control" type="text" name="cardname" placeholder="Kartenname"
                            ng-model="nCard.name" required>
                     <input class="form-control" type="NUMBER" min="0" ng-model="nCard.cost" placeholder="Kosten"
                            required>
+                    <!-- Rarity Auswahl -->
+                    <div class="row">
+                        <div class="btn-group col-md-3">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Rarity <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="" ng-click="nCard.rarity = 'commen'"><span>Commen</span></a></li>
+                                <li><a href="" ng-click="nCard.rarity = 'uncommen'"><span>Uncommen</span></a></li>
+                                <li><a href="" ng-click="nCard.rarity = 'rar'"><span>Rar</span></a></li>
+                                <li><a href="" ng-click="nCard.rarity = 'epic'"><span>Epic</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="cardrarity" placeholder="Seltenheit"
+                                   ng-model="nCard.rarity" required disabled>
+                        </div>
+                    </div>
 
                     <!-- Editon Auswahl -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <div class="row">
+                        <div class="btn-group col-md-3">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             Editions <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="edi in editions"><a href="" ng-click="nCard.edition = edit"><span
+                            <li ng-repeat="edi in editions"><a href="" ng-click="nCard.edition = edi"><span
                                     ng-bind="edi.name"></span></a></li>
                         </ul>
                     </div>
-                    <input class="form-control" type="text" name="cardedition" placeholder="Edition"
+                        <div class="col-md-9">
+                        <input class="form-control" type="text" name="cardedition" placeholder="Edition"
                            ng-model="nCard.edition.name" required disabled>
+                        </div>
+                    </div>
                     <!-- Typ Auswahl -->
-                    <div class="btn-group">
+                    <div class="row">
+                        <div class="btn-group col-md-3">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             Typ:<span class="caret"></span>
                         </button>
@@ -34,11 +57,15 @@
                         </ul>
 
                     </div>
-                    <input class="form-control" type="text" name="cardtyp" placeholder="Karten Typ"
+                        <div class="col-md-9">
+                        <input class="form-control" type="text" name="cardtyp" placeholder="Karten Typ"
                            ng-model="nCard.typ.name" required disabled>
+                        </div>
+                    </div>
 
                     <!-- Color Auswahl -->
-                    <div class="btn-group">
+                    <div class="row">
+                        <div class="btn-group col-md-3">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             Colors <span class="caret"></span>
                         </button>
@@ -47,8 +74,11 @@
                                     ng-bind="color.name"></span></a></li>
                         </ul>
                     </div>
-                    <input class="form-control" type="text" name="cardcolor" placeholder="Karten Farbe"
+                        <div class="col-md-9">
+                        <input class="form-control" type="text" name="cardcolor" placeholder="Karten Farbe"
                            ng-model="nCard.color.name" required disabled>
+                        </div>
+                    </div>
                     <textarea class="form-control" ng-model="nCard.ability"
                               placeholder="Fähigkeit der Karte"></textarea>
 
@@ -56,14 +86,14 @@
                     <!-- Typ Spezifisch -->
                     <div ng-show="checkTyp('atk',nCard.typ.name)">
                         <input class="form-control" type="NUMBER" min="0" ng-model="nCard.atk" placeholder="ATK"
-                               required>
+                                >
                         <input class="form-control" type="NUMBER" min="0" ng-model="nCard.ver" placeholder="VER"
-                               required>
+                                >
                     </div>
 
                     <div ng-show="checkTyp('live',nCard.typ.name)">
                         <input class="form-control" type="NUMBER" min="0" ng-model="nCard.live" placeholder="Leben"
-                               required>
+                                >
                     </div>
                     <div ng-init="hidden = false">
                         <span class="glyphicon glyphicon-plus-sign" ng-click="hidden = true" ng-hide="hidden"></span>
@@ -77,39 +107,69 @@
                         </div>
 
                     </div>
-
-
                     <div class="form-group has-error">
                         <span class="help-block" ng-bind="errorMsg"></span>
                     </div>
-                    <button class="btn btn-danger" type="reset" ng-click="errorMsg='';reset();" data-dismiss="modal">
-                        Cancel
+                    <button class="btn btn-primary pull-right" ng-click="reset()">Reset
                     </button>
                     <button class="btn btn-primary pull-right" type="submit"
-                            ng-disabled="form.$invalid || !form.$dirty">Login
+                            ng-disabled="form.$invalid || !form.$dirty">Anlegen
                     </button>
                 </form>
             </div>
             <div class="col-md-6">
-                <div class="card"></div>
+                <div class="card" style="background-color: {{nCard.color.name}}"
+                     ng-class="{'b-com': checkRar('co',nCard.rarity), 'b-uncom': checkRar('un',nCard.rarity) ,'b-rar': checkRar('ra',nCard.rarity) , 'b-epic': checkRar('ep',nCard.rarity)}">
+                    <span ng-bind="nCard.name"></span>
+                    <span ng-bind="nCard.typ.name"></span>
+                    <span ng-bind="nCard.edition.name"></span>
+                    <span ng-bind="nCard.live"></span>
+                    <span ng-bind="nCard.cost"></span>
+                    <span ng-bind="nCard.ability"> </span>
+                    <span ng-bind="nCard.text"> </span>
+                    <span ng-bind="nCard.atk"> </span>
+                    <span ng-bind="nCard.ver"> </span>
+                </div>
             </div>
         </div>
-        <div class="row tabl">
+        <div ng-init="showSearch = false">
+            <input type="text" ng-model="search.$" placeholder="Search All" class="input-sm">
+
+            <div ng-show="showSearch">
+                <input type="text" ng-model="search.name" placeholder="Search Name" class="input-sm">
+                <input type="text" ng-model="search.atk" placeholder="Search Atk" class="input-sm">
+                <input type="text" ng-model="search.ver" placeholder="Search Ver" class="input-sm">
+                <input type="text" ng-model="search.typ" placeholder="Search typ" class="input-sm">
+                <input type="text" ng-model="search.color" placeholder="Search color" class="input-sm">
+            </div>
+            <span class="glyphicon glyphicon-plus-sign" ng-click="showSearch = true" ng-hide="showSearch"></span>
+            <span class="glyphicon glyphicon-minus-sign" ng-click="showSearch = false" ng-show="showSearch"></span>
+
+            <div class="row tabl">
             <div class="row tabl-head">
                 <div class="col-md-3"><h4>Name</h4></div>
                 <div class="col-md-1"><h4>Kosten</h4></div>
-                <div class="col-md-2"><h4>Leben</h4></div>
-                <div class="col-md-2"><h4>ATK</h4></div>
-                <div class="col-md-2"><h4>VER</h4></div>
-                <div class="col-md-2"><h4>HIDDEN</h4></div>
+                <div class="col-md-1"><h4>Leben</h4></div>
+                <div class="col-md-1"><h4>ATK</h4></div>
+                <div class="col-md-1"><h4>VER</h4></div>
+                <div class="col-md-2"><h4>Typ</h4></div>
+                <div class="col-md-1"><h4>Farbe</h4></div>
+                <div class="col-md-1"><h4>Edition</h4></div>
+                <div class="col-md-1"><h4>HIDDEN</h4></div>
             </div>
-            <div class="row hov tabl-body" ng-repeat="card in cards">
-                <div class="col-md-3"><span ng-bind="card.name"></span></div>
+                <div class="row hov tabl-body" ng-repeat="card in cards | filter:search:strict "
+                     ng-click="loadCard(card)">
+                    <div class="col-md-3"><span ng-bind="card.name"></span></div>
                 <div class="col-md-1"><span ng-bind="checkCost(card.cost)"></span></div>
-                <div class="col-md-2"><span ng-bind="checkLive(card.live)"></span></div>
-                <div class="col-md-2"><span ng-bind="checkAtk(card.atk)"></span></div>
-                <div class="col-md-2"><span ng-bind="checkVer(card.ver)"></span></div>
-                <div class="col-md-2"><span ng-bind="card.hidden"></span></div>
+                    <div class="col-md-1"><span ng-bind="checkLive(card.live)"></span></div>
+                    <div class="col-md-1"><span ng-bind="checkAtk(card.atk)"></span></div>
+                    <div class="col-md-1"><span ng-bind="checkVer(card.ver)"></span></div>
+                    <div class="col-md-2"><span ng-repeat="typ in card.typ" ng-bind="typ.name"></span></div>
+                    <div class="col-md-1"><span ng-repeat="color in card.color" ng-bind="color.name"></span></div>
+                    <div class="col-md-1"><span ng-bind="card.edition.name"></span></div>
+                    <div class="col-md-1"><span ng-bind="card.hidden"></span></div>
+
+                </div>
             </div>
         </div>
 

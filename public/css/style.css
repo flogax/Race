@@ -34,6 +34,11 @@ div.links ul {
     background-color: #2aabd2;
 }
 
+.hov-click:hover {
+    background-color: #2aabd2;
+    cursor: pointer;
+}
+
 .tabl {
     background-color: #333333;
     border-radius: 10px;
@@ -50,8 +55,30 @@ div.links ul {
 }
 
 .card {
-    width: 200px;
-    height: 400px;
-    border-style: solid;
+    -webkit-print-color-adjust: exact;
+    display: inline-block;
+    border: solid 5px;
     border-radius: 10px;
+    width: 61mm;
+    height: 86mm;
+}
+
+.card.b-com {
+    border-color: #000;
+}
+
+.card.b-uncom {
+    border-color: #999999;
+}
+
+.card.b-rar {
+    border-color: #e38d13;
+}
+
+.card.b-epic {
+    border-color: #880088;
+}
+
+div.row div.btn-group.col-md-3 button.btn.btn-default.dropdown-toggle {
+    width: 100%;
 }
