@@ -6,23 +6,14 @@ var bcrypt = require("bcryptjs");
 var SALT_WORK_FACTOR = 10;
 
 var api = {
-    findAllCards: function (Card) {
+    findAll: function (model, pop) {
         return function (req, res, next) {
-            Card.find({}).populate('typ edition color').exec(function (err, data) {
-                if (err) {
-                    console.error("Error finding %ss: %j", Model.modelName, err);
-                    return res.json(500, err);
-                } else if (!data) {
-                    return res.json(404);
-                }
-                res.json(data);
-            });
-        }
-    },
+            var query = model.find({});
+            if (pop) {
+                query.populate(pop);
+            }
 
-    findAll: function (model) {
-        return function (req, res, next) {
-            model.find({}, function (err, data) {
+            Q.when(query.exec(function (err, data) {
                 if (err) {
                     console.error("Error finding %ss: %j", Model.modelName, err);
                     return res.json(500, err);
@@ -30,22 +21,35 @@ var api = {
                     // TODO use maybe a better statuscode (empy response?)
                     return res.json(404);
                 }
-                res.json(data);
-            })
+                return res.json(data);
+            }));
         };
     },
 
-    find: function (model) {
+    find: function (model, pop, pop2) {
         return function (req, res, next) {
-            model.findById(req.params.id, function (err, data) {
+            var query;
+            var id = req.params.id;
+            try {
+                query = model.findById(id);
+                console.log('test');
+            } catch (ex) {
+                query = model.findOne({ id: id });
+            }
+            if (pop) {
+                query = query.populate(pop);
+                console.log('testPop');
+            }
+            Q.when(query.exec(function (err, data) {
+                console.log(data);
                 if (err) {
                     console.error("Error finding %s with ID %s: %j", Model.modelName, req.id, err);
                     return res.json(500, err);
                 } else if (!data) {
                     return res.send(404);
                 }
-                res.json(data);
-            });
+                return res.json(data);
+            }));
         };
     },
 
@@ -62,12 +66,12 @@ var api = {
                 res.location(uri);
                 // delete password so that the hash is not transmitted
                 delete instance.password;
-                res.json(201, instance);
+                return res.json(201, instance);
             });
         };
     },
 
-    update: function (Model) {
+    update: function (Model, pop) {
         return function (req, res, next) {
             var id = req.params.id;
             // delete _id to avoid an exception by trying to modify _id
@@ -79,14 +83,19 @@ var api = {
             if (req.body.password) {
                 req.body.password = bcrypt.hashSync(req.body.password, SALT_WORK_FACTOR);
             }
-            Model.findByIdAndUpdate(id, req.body, function (err, instance) {
+            var query = Model.findByIdAndUpdate(id, req.body);
+            if (pop) {
+                query = query.populate(pop);
+            }
+            Q.when(query.exec(function (err, instance) {
                 if (err) {
                     console.error("Error updating %s with ID %s: %j", Model.modelName, id, err);
                     res.json(500, err);
                 }
 
                 res.json(instance);
-            });
+            }));
+
         };
     },
 

@@ -22,8 +22,12 @@
             <ul class="nav navbar-nav">
                 <li ng-class="{active: isActive('/race/home')}"><a href="/race/home">Startseite</a></li>
                 <li ng-class="{active: isActive('/race/rules')}"><a href="/race/rules">Regelwerk</a></li>
-                <li ng-class="{active: isActive('/race/cards')}"><a href="/race/cards">Karten</a></li>
-                <li ng-class="{active: isActive('/race/decks')}"><a href="/race/decks">Decks</a></li>
+                <li ng-class="{active: isActive('/race/cards')}" ng-show="auth.user"><a href="/race/cards">Karten</a>
+                </li>
+                <li ng-class="{active: isActive('/race/decks')}" ng-show="auth.user"><a href="/race/decks">Decks</a>
+                </li>
+                <li ng-class="{active: isActive('/race/user')}" ng-show="auth.restrictTo('operrator')"><a
+                        href="/race/user">Admin User</a></li>
             </ul>
             <p class="navbar-text navbar-right opac-null" ng-show="auth.user">
                 <span ng-bind="auth.user.nickname"></span> |&nbsp;<a href="#" ng-click="logout()"

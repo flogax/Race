@@ -25,7 +25,7 @@ var sessionOptions = {
     proxy: false,
     cookie: {
         maxAge: 1000 * 8640000,
-        secure: true
+        secure: false
     }
 };
 
@@ -65,28 +65,28 @@ app.all('/api/news', api.listMethods("GET POST"));
 app.all('/api/news/:id', api.listMethods("GET PUT DELETE"));
 
 //User Service
-app.get('/api/user', api.findAll(User));
-app.get('/api/user/:id', api.find(User));
+app.get('/api/user', api.findAll(User, 'card decks'));
+app.get('/api/user/:id', api.find(User, 'card decks'));
 app.post('/api/user', api.add(User));
-app.put('/api/user/:id', api.update(User));
+app.put('/api/user/:id', api.update(User, 'card decks'));
 app.delete('/api/user/:id', api.remove(User));
 app.all('/api/user', api.listMethods("GET POST"));
 app.all('/api/user/:id', api.listMethods("GET PUT DELETE"));
 
 //Card Service
-app.get('/api/card', api.findAllCards(Card));
-app.get('/api/card/:id', api.find(Card));
+app.get('/api/card', api.findAll(Card, 'typ edition color'));
+app.get('/api/card/:id', api.find(Card, 'typ edition color'));
 app.post('/api/card', api.add(Card));
-app.put('/api/card/:id', api.update(Card));
+app.put('/api/card/:id', api.update(Card, 'typ edition color'));
 app.delete('/api/card/:id', api.remove(Card));
 app.all('/api/card', api.listMethods("GET POST"));
 app.all('/api/card/:id', api.listMethods("GET PUT DELETE"));
 
 //Deck Service
-app.get('/api/deck', api.findAll(Deck));
-app.get('/api/deck/:id', api.find(Deck));
+app.get('/api/deck', api.findAll(Deck, 'card user'));
+app.get('/api/deck/:id', api.find(Deck, 'card user'));
 app.post('/api/deck', api.add(Deck));
-app.put('/api/deck/:id', api.update(Deck));
+app.put('/api/deck/:id', api.update(Deck, 'card user'));
 app.delete('/api/deck/:id', api.remove(Deck));
 app.all('/api/deck', api.listMethods("GET POST"));
 app.all('/api/deck/:id', api.listMethods("GET PUT DELETE"));

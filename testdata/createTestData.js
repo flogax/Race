@@ -24,7 +24,8 @@ process.on("rtc-DBOpen", function () {
         Q.when(Color.remove().exec()),
         Q.when(Edition.remove().exec()),
         Q.when(Typ.remove().exec()),
-        Q.when(Card.remove().exec())
+        Q.when(Card.remove().exec()),
+        Q.when(Deck.remove().exec())
 
     ];
 
@@ -38,9 +39,9 @@ process.on("rtc-DBOpen", function () {
     ];
 
     var usrCalls = [
-        User.create({firstname: "flo", lastname: "hot", nickname: "floga1", email: "f1@h.at", role: 4, password: "pw1"}),
-        User.create({firstname: "flo", lastname: "hot", nickname: "floga2", email: "f2@h.at", role: 2, password: "pw2"}),
-        User.create({firstname: "flo", lastname: "hot", nickname: "floga3", email: "f3@h.at", role: 1, password: "pw3"})
+        User.create({firstname: "flo", lastname: "hot", nickname: "floga1", email: "f1@h.at", role: 'admin', password: "pw1"}),
+        User.create({firstname: "flo", lastname: "hot", nickname: "floga2", email: "f2@h.at", role: 'op', password: "pw2"}),
+        User.create({firstname: "flo", lastname: "hot", nickname: "floga3", email: "f3@h.at", role: 'user', password: "pw3"})
 
     ];
 

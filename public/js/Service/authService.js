@@ -92,6 +92,7 @@ common.service('AuthService', function ($q, $http, $location, $rootScope) {
 
         if (that.user) {
             // !! converts the expression to a boolean
+            // console.log('Auth:'+roles[that.user.role] +'=' + accessLevels[accessLevel] );
             return !!(roles[that.user.role] & accessLevels[accessLevel]);
         }
 

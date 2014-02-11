@@ -11,7 +11,8 @@ var deckSchema = new mongoose.Schema({
             card: {type: Schema.Types.ObjectId, ref: 'Card'},
             stk: Number
         }
-    ]
+    ],
+    user: {type: Schema.Types.ObjectId, ref: 'User'}
 }, { toObject: { virtuals: true }, toJSON: { virtuals: true }});
 
 

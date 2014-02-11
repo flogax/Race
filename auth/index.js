@@ -35,7 +35,7 @@ exports.authenticate = function (req, res, next) {
         return;
     }
 
-    Q.when(User.findOne({ nickname: nickname }).select('+password').exec())
+    Q.when(User.findOne({ nickname: nickname }).select('+password').populate('decks card').exec())
         .then(function (user) {
             if (!user) {
                 res.send(401, 'wrong credentials'); // unauthorized
@@ -45,7 +45,6 @@ exports.authenticate = function (req, res, next) {
                         next(err);
                         return;
                     }
-                    console.log('SessionID:' + req.sessionID);
                     req.session.user = user;
                     user = user.toJSON();
                     delete user.password; // do not transmit hashes over network
@@ -59,7 +58,6 @@ exports.authenticate = function (req, res, next) {
 };
 
 exports.revokeAuth = function (req, res, next) {
-    console.log('SessionID:' + req.sessionID);
     req.session.destroy(function (err) {
         if (err) {
             next(err);
@@ -71,8 +69,9 @@ exports.revokeAuth = function (req, res, next) {
 };
 
 exports.check = function (req, res) {
-    console.log(req.sessionID);
     if (req.session.user) {
+        var user = req.session.user;
+        delete user.password;
         res.json(200, req.session.user); // ok
     } else {
         res.send(401); // unauthorized

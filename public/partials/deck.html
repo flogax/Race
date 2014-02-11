@@ -20,6 +20,7 @@
             <div class="hov-click" ng-repeat="deck in decks" ng-click="openDeck(deck)">
                 <span class="glyphicon glyphicon-arrow-right"></span>
                 <span ng-bind="deck.name"></span>
+                <span ng-bind="deck.user.nickname" ng-show="auth.restrictTo('admin')"></span>
             </div>
         </div>
 
@@ -30,7 +31,7 @@
                 </h3>
             </div>
             <div ng-repeat="card in wDeck.cards">
-                <span ng-bind="card.card.name"></span>
+                <span ng-bind="name" ng-init="name = getCard(card.id)"></span>
                 <span ng-bind="card.card.edition.name"></span>
                 <span ng-bind="card.card.atk"></span>
                 <span ng-bind="card.card.ver"></span>
