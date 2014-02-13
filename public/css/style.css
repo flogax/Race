@@ -63,6 +63,81 @@ div.links ul {
     height: 86mm;
 }
 
+.card-tool {
+    -webkit-print-color-adjust: exact;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    display: inline-block;
+    border: solid 2px;
+    border-radius: 5px;
+    width: 30.5mm;
+    height: 43mm;
+    font-size: 0.5em;
+}
+
+.card-tool .name {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+.card-tool .typ {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+}
+
+.card-tool .werte {
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+}
+
+.card-tool .live {
+    position: absolute;
+    top: 20mm;
+    right: 1px;
+}
+
+.card-tool .cost {
+    position: absolute;
+    top: 20mm;
+    left: 1px;
+}
+
+.card-tool .txt-abi {
+    position: absolute;
+    top: 22mm;
+    left: 1mm;
+    height: 17mm;
+    width: 27.5mm;
+    margin-right: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #999999;
+}
+
+.card-tool .edition {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+}
+
+.card-tool .bild {
+    position: absolute;
+    top: 3mm;
+    left: 1mm;
+    height: 15mm;
+    width: 27.5mm;
+    margin-right: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #999999;
+}
+
 .card.b-com {
     border-color: #000;
 }
@@ -81,4 +156,34 @@ div.links ul {
 
 div.row div.btn-group.col-md-3 button.btn.btn-default.dropdown-toggle {
     width: 100%;
+}
+
+/* ----- Deck anzeige sachen ----- */
+
+.show-deck .name {
+    font-size: 1.2em;
+}
+
+.show-deck .username {
+    font-size: 0.7em;
+}
+
+.show-deck .metadata {
+    font-size: 0.5em;
+}
+
+.show-deck {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    margin: 2px;
+}
+
+/*------ Show Card ------ */
+
+.show-card {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    margin: 2px;
 }

@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <div class="row">
             <div ng-init="newDeck=false">
-                <h2>Meine Decks
+                <h2>Decks
                     <small><span class="glyphicon glyphicon-plus-sign" ng-click="newDeck = true"
                                  ng-hide="newDeck"></span>
                         <span class="glyphicon glyphicon-minus-sign" ng-click="newDeck = false"
@@ -17,10 +17,15 @@
         </div>
 
         <div class="row" ng-hide="open">
-            <div class="hov-click" ng-repeat="deck in decks" ng-click="openDeck(deck)">
-                <span class="glyphicon glyphicon-arrow-right"></span>
-                <span ng-bind="deck.name"></span>
-                <span ng-bind="deck.user.nickname" ng-show="auth.restrictTo('admin')"></span>
+            <div class="row">
+                <input type="text" ng-model="search.name" placeholder="Search Deck Name" class="input-sm">
+                <input type="text" ng-model="search.user" placeholder="Search User Nickname" class="input-sm">
+            </div>
+            <div class="hov-click col-md-3 show-deck" ng-repeat="deck in decks | filter:search:strict"
+                 ng-click="openDeck(deck)">
+                <span class="name col-md-12" ng-bind="deck.name"></span>
+                <span class="username col-md-4" ng-bind="deck.user.nickname"></span>
+                <span class="metadata col-md-8">METADATA PLATZ HALTER</span>
             </div>
         </div>
 
@@ -31,15 +36,17 @@
                 </h3>
             </div>
             <div ng-repeat="card in wDeck.cards">
-                <span ng-bind="name" ng-init="name = getCard(card.id)"></span>
+                <span ng-bind="card.card.name" ng-init="getCard(card)"></span>
                 <span ng-bind="card.card.edition.name"></span>
                 <span ng-bind="card.card.atk"></span>
                 <span ng-bind="card.card.ver"></span>
                 <input type="text" ng-model="card.stk" class="input-sm">
                 <span class="glyphicon glyphicon-trash" ng-click="removeCard(card, $index)">Remove</span>
             </div>
+            <div ng-show="checkUser(wDeck.user.id) || auth.restrictTo('admin')">
             <span class="glyphicon glyphicon-plus-sign" ng-click="sCards = true">AddCards</span>
             <button ng-click="save()" class="btn btn-info">Save</button>
+            </div>
             <div class="row" ng-show="sCards">
                 <input type="text" ng-model="search.$" placeholder="Search All">
 

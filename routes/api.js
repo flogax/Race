@@ -26,19 +26,19 @@ var api = {
         };
     },
 
-    find: function (model, pop, pop2) {
+    find: function (model, pop) {
         return function (req, res, next) {
             var query;
             var id = req.params.id;
+            console.log(typeof id);
             try {
                 query = model.findById(id);
-                console.log('test');
             } catch (ex) {
-                query = model.findOne({ id: id });
+                query = model.findOne({ _id: id });
             }
             if (pop) {
+                console.log(pop);
                 query = query.populate(pop);
-                console.log('testPop');
             }
             Q.when(query.exec(function (err, data) {
                 console.log(data);
@@ -48,6 +48,7 @@ var api = {
                 } else if (!data) {
                     return res.send(404);
                 }
+                console.log(data);
                 return res.json(data);
             }));
         };

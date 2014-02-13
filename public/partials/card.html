@@ -145,30 +145,13 @@
             <span class="glyphicon glyphicon-plus-sign" ng-click="showSearch = true" ng-hide="showSearch"></span>
             <span class="glyphicon glyphicon-minus-sign" ng-click="showSearch = false" ng-show="showSearch"></span>
 
-            <div class="row tabl">
-            <div class="row tabl-head">
-                <div class="col-md-3"><h4>Name</h4></div>
-                <div class="col-md-1"><h4>Kosten</h4></div>
-                <div class="col-md-1"><h4>Leben</h4></div>
-                <div class="col-md-1"><h4>ATK</h4></div>
-                <div class="col-md-1"><h4>VER</h4></div>
-                <div class="col-md-2"><h4>Typ</h4></div>
-                <div class="col-md-1"><h4>Farbe</h4></div>
-                <div class="col-md-1"><h4>Edition</h4></div>
-                <div class="col-md-1"><h4>HIDDEN</h4></div>
-            </div>
-                <div class="row hov tabl-body" ng-repeat="card in cards | filter:search:strict "
-                     ng-click="loadCard(card)">
-                    <div class="col-md-3"><span ng-bind="card.name"></span></div>
-                <div class="col-md-1"><span ng-bind="checkCost(card.cost)"></span></div>
-                    <div class="col-md-1"><span ng-bind="checkLive(card.live)"></span></div>
-                    <div class="col-md-1"><span ng-bind="checkAtk(card.atk)"></span></div>
-                    <div class="col-md-1"><span ng-bind="checkVer(card.ver)"></span></div>
-                    <div class="col-md-2"><span ng-repeat="typ in card.typ" ng-bind="typ.name"></span></div>
-                    <div class="col-md-1"><span ng-repeat="color in card.color" ng-bind="color.name"></span></div>
-                    <div class="col-md-1"><span ng-bind="card.edition.name"></span></div>
-                    <div class="col-md-1"><span ng-bind="card.hidden"></span></div>
+            <div class="row">
+                <h2>Cards</h2>
 
+                <div class="row hov show-Card col-md-4" ng-repeat="card in cards | filter:search:strict "
+                     ng-click="loadCard(card)" tooltip-placement="bottom" tooltip-html-unsafe="{{showCard(card)}}"
+                     tooltip-popup-delay='1000'>
+                <div class="col-md-3"><span ng-bind="card.name"></span></div>
                 </div>
             </div>
         </div>

@@ -83,10 +83,10 @@ app.all('/api/card', api.listMethods("GET POST"));
 app.all('/api/card/:id', api.listMethods("GET PUT DELETE"));
 
 //Deck Service
-app.get('/api/deck', api.findAll(Deck, 'card user'));
-app.get('/api/deck/:id', api.find(Deck, 'card user'));
+app.get('/api/deck', api.findAll(Deck, 'user card'));
+app.get('/api/deck/:id', api.find(Deck, 'user card'));
 app.post('/api/deck', api.add(Deck));
-app.put('/api/deck/:id', api.update(Deck, 'card user'));
+app.put('/api/deck/:id', api.update(Deck, 'user card'));
 app.delete('/api/deck/:id', api.remove(Deck));
 app.all('/api/deck', api.listMethods("GET POST"));
 app.all('/api/deck/:id', api.listMethods("GET PUT DELETE"));

@@ -1,4 +1,4 @@
-app.controller('DeckCtrl', function ($scope, AuthService, Card, Deck, User) {
+app.controller('DeckCtrl', function ($scope, $location, AuthService, Card, Deck, User) {
 
     var user;
 
@@ -6,28 +6,22 @@ app.controller('DeckCtrl', function ($scope, AuthService, Card, Deck, User) {
 
     function init() {
         if (AuthService.user) {
-            User.get({id: AuthService.user.id}, function (data) {
-                user = data;
-                if (AuthService.restrictTo('operrator')) {
-                    $scope.cards = Card.getAll();
-                    Deck.getAll(function (data) {
-                        $scope.decks = data;
-                        console.log('Decks:');
-                        console.log($scope.decks[0].cards);
-                    });
+            user = AuthService.user;
+            User.get({id: AuthService.user.id});
 
-                } else if (AuthService.restrictTo('public')) {
-                    $scope.cards = Card.getAll();
-                    $scope.decks = user.decks;
-                    console.log($scope.decks[0].cards);
-                } else {
-                    $scope.cards = [];
-                    $scope.decks = [];
-                }
+            $scope.cards = Card.getAll();
+            Deck.getAll(function (data) {
+                $scope.decks = data;
             });
+        } else {
+            $location.path('race/home');
         }
+
     }
 
+    $scope.$on('logout', function () {
+        $location.path('race/home');
+    });
     init();
 
     $scope.open = false;
@@ -36,21 +30,13 @@ app.controller('DeckCtrl', function ($scope, AuthService, Card, Deck, User) {
     $scope.wDeck = null;
 
     $scope.createDeck = function () {
+        console.log(user);
         if (user) {
             $scope.nDeck.cardCount = 0;
             $scope.nDeck.raceCount = 0;
             $scope.nDeck.user = user.id;
             Deck.create($scope.nDeck, function (suc, err) {
-                var temArray = [];
-                angular.forEach(user.decks, function (data) {
-                    temArray.push(data.id);
-                });
-                temArray.push(suc.id);
-                user.decks = temArray;
-                user.$save(function (data) {
-                    $scope.nDeck = new Deck();
-                    init();
-                });
+                init();
             });
 
         }
@@ -67,6 +53,7 @@ app.controller('DeckCtrl', function ($scope, AuthService, Card, Deck, User) {
         var tempUser = deck.user;
         deck.decks = [];
         angular.forEach($scope.wDeck.cards, function (card) {
+            console.log(card.card);
             deck.decks.push({card: card.card.id, stk: card.stk});
         });
         deck.user = tempUser.id;
@@ -101,10 +88,18 @@ app.controller('DeckCtrl', function ($scope, AuthService, Card, Deck, User) {
         }
     };
 
-    $scope.getCard = function (id) {
-        console.log(id);
+    $scope.checkUser = function (id) {
+        if (AuthService.user) {
+            return AuthService.checkUser(id);
+        }
+        return false;
+    };
+
+    $scope.getCard = function (card) {
+
+        console.log(card.id + typeof card.id);
         var test;
-        Card.get({id: id}, function (data) {
+        Card.get({id: card.id}, function (data) {
             console.log(data);
             test = data;
         });

@@ -132,4 +132,8 @@ common.service('AuthService', function ($q, $http, $location, $rootScope) {
             }
         }
     });
+
+    this.checkUser = function (id) {
+        return (this.user.id === id);
+    };
 });
