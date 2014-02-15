@@ -1,31 +1,54 @@
 <div class="col-md-12">
     <div class="jumbotron" ng-init="showAdd = false">
-        <span class="glyphicon glyphicon-plus-sign pull-right" ng-click="showAdd = !showAdd" ng-hide="false"></span>
+        <span class="glyphicon glyphicon-plus-sign pull-right" ng-click="showAdd = !showAdd"
+              ng-show="auth.restrictTo('admin')"></span>
 
-        <div ng-show="showAdd">
-            <span>Header:</span><input type="text" ng-model="newNews.header"/><br/>
-            <span>Date:</span><input type="DATE" ng-model="newNews.date"/><br/>
-            <span>News:</span><textarea ng-model="newNews.message"></textarea><br/>
+        <div ng-show="getBool(showAdd,auth.restrictTo('admin'))">
+            <span>Header:</span><input type="text" class="form-control" ng-model="newNews.header"/>
+            <span>Date:</span><input type="DATE" class="input-sm" ng-model="newNews.date"/>
+
+            <h4>Popup</h4>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="input-group">
+                        <input type="text" class="form-control" datepicker-popup="dd.MMMM.yyyy" ng-model="newNews.date"
+                               is-open="opened" min="minDate" max="'2015-06-22'" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+                    </p>
+                </div>
+            </div>
+
+            <span>News:</span><textarea class="form-control" ng-model="newNews.message"></textarea>
             <button ng-click="submit()">Anlegen</button>
         </div>
         <h1>Race News Page</h1>
 
         <div ng-repeat="news in newsAll">
             <div>
-                <h2 ng-init="header = true">
-                    <span ng-bind="news.header" ng-show="header" ng-click="header = !header"></span>
-                    <input type="text" ng-model="news.header" ng-hide="header" ng-blur="header = !header; update(news)">
+                <h2 ng-init="header = false">
+                    <span ng-bind="news.header" ng-hide="header"
+                          ng-click="header = getBool(!header,auth.restrictTo('admin'))"></span>
+                    <input class="form-control" type="text" ng-model="news.header" ng-show="header"
+                           ng-blur="header = !header; update(news)">
 
-                    <small ng-init="date = true">
-                        <span ng-bind="news.date | date:'dd-MM-yyyy'" ng-click="date= !date" ng-show="date"></span>
-                        <input type="date" ng-model="news.date" ng-blur="date = !date;update(news)" ng-hide="date">
-                        <span class="glyphicon glyphicon-trash" ng-click="remove(news)"></span>
+                    <small ng-init="date = false">
+                        <span ng-bind="news.date | date:'dd-MM-yyyy'"
+                              ng-click="date= getBool(!date,auth.restrictTo('admin'))" ng-hide="date"></span>
+                        <input class="form-control" type="date" ng-model="news.date" ng-blur="date = !date;update(news)"
+                               ng-show="date">
+                        <span class="glyphicon glyphicon-trash" ng-click="remove(news)"
+                              ng-show="auth.restrictTo('admin')"></span>
 
                     </small>
                 </h2>
-                <span ng-init="message = true">
-                <p ng-bind="news.message" ng-show="message" ng-click="message = !message"></p>
-                <textarea ng-model="news.message" ng-hide="message"
+                <span ng-init="message = false">
+                <p ng-bind="news.message" ng-hide="message"
+                   ng-click="message = getBool(!message,auth.restrictTo('admin'))"></p>
+                <textarea class="form-control" ng-model="news.message" ng-show="message"
                           ng-blur="message = !message; update(news)"></textarea>
                 </span>
             </div>

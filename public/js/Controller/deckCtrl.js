@@ -66,13 +66,15 @@ app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, Card, D
         });
         $scope.wDeck.cards = tempArray;
         $scope.wDeck.user = $scope.wDeck.user.id;
-        var testbool = checkDeck($scope.wDeck);
-        console.log(testbool);
-        if (testbool) {
-            toaster.pop('success', "Deck könnte gespeichert werden", "", 4000);
-        } else {
-            toaster.pop('error', "Deck konnte nich gespeichert werden da es eine Falsche struktur hat ", "", 4000);
-        }
+        checkDeck($scope.wDeck).then(function (bool) {
+            console.log(bool);
+            if (bool) {
+                toaster.pop('success', "Deck könnte gespeichert werden", "", 4000);
+            } else {
+                toaster.pop('error', "Deck konnte nich gespeichert werden da es eine Falsche struktur hat ", "", 4000);
+            }
+        });
+
         Deck.save($scope.wDeck);
         // toaster.pop('success', "Deck wurde erfolgreich Gespeichert", "", 2000);
         init();
@@ -139,75 +141,48 @@ app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, Card, D
         var countCard = 0;
         var countRasse = 0;
         var boolFalse = false;
-        var deferred = $q.defer();
-        var promise = deferred.promise;
-        promise.then(function () {
+        var promise = [];
 
-            angular.forEach(deck.cards, function (card) {
-                if (card.card.id) {
-                    if (card.card.typ.name === 'RASSE') {
-                        if (card.stk > 1) {
-                            toaster.pop('warning', "Es können von Rassen jeweils nur eine Karte, pro Rasse, ins deck gegeben werden!", "", 3500);
-                            boolFalse = true;
-                        } else {
-                            countRasse += card.stk;
-                        }
+        $.each(deck.cards, function (id, card) {
+            promise.push(foo(card));
+        });
+
+        function foo(card) {
+            var deferred = $q.defer();
+            Card.get({id: card.card}, function (tmpCard) {
+                if (tmpCard.typ[0].name === 'RASSE') {
+                    if (card.stk > 1) {
+                        toaster.pop('error', "Es können von Rassen jeweils nur eine Karte, pro Rasse, ins deck gegeben werden!", "", 5000);
+                        boolFalse = true;
                     } else {
-                        if (card.stk > 3) {
-                            toaster.pop('warning', "Es können von normalen Karten nur maximal 3 stk, ins deck gegeben werden!", "", 3500);
-                            boolFalse = true;
-                        } else {
-                            countCard += card.stk;
-                        }
+                        countRasse += card.stk;
                     }
-
                 } else {
-                    Card.get({id: card.card}, function (tmpCard) {
-                        console.log(tmpCard.typ[0].name + ' === RASSE');
-                        if (tmpCard.typ[0].name === 'RASSE') {
-                            if (card.stk > 1) {
-                                toaster.pop('error', "Es können von Rassen jeweils nur eine Karte, pro Rasse, ins deck gegeben werden!", "", 5000);
-                                boolFalse = true;
-                            } else {
-
-                                countRasse += card.stk;
-                                console.log('CR:' + countRasse);
-                            }
-                        } else {
-                            if (card.stk > 3) {
-                                toaster.pop('error', "Es können von normalen Karten nur maximal 3 stk, ins deck gegeben werden!", "", 5000);
-                                boolFalse = true;
-                            } else {
-                                countCard += card.stk;
-                                console.log('CC:' + countCard);
-                            }
-                        }
-                    });
+                    if (card.stk > 3) {
+                        toaster.pop('error', "Es können von normalen Karten nur maximal 3 stk, ins deck gegeben werden!", "", 5000);
+                        boolFalse = true;
+                    } else {
+                        countCard += card.stk;
+                    }
                 }
-
+                deferred.resolve();
             });
+            return deferred.promise;
+        }
 
-        }).then(function () {
-                if (boolFalse) {
-                    return false;
+        return $q.all(promise).then(function () {
+            if (boolFalse) {
+                return false;
+            } else {
+                if (countCard > 40 || countRasse > 10) {
+                    toaster.pop('error', "Es können maximal (" + countCard + "/)40 Normale karten oder (" + countRasse + "/)10 RASSE Karten, ins Deck gegebne werden", "", 5000);
+                    return false
                 } else {
-                    console.log('finish: CC:' + countCard + 'CR:' + countRasse);
-                    if (countCard > 40) {
-                        toaster.pop('error', "Es können maximal (" + countCard + "/)40 Normale karten ins Deck gegebne werden", "", 5000);
-                        return false
-                    } else {
-                        toaster.pop('warning', "Es können bis zu (" + countCard + "/)40 Normale karten und (" + countRasse + "/)10 RASSE Karten ins Deck gegebne werden", "", 3500);
-                    }
-                    if (countRasse > 10) {
-                        toaster.pop('error', "Es können maximal (" + countRasse + "/)10 RASSE Karten ins Deck gegebne werden", "", 5000);
-                        return false;
-                    } else {
-                        toaster.pop('warning', "Es können bis zu (" + countCard + "/)40 Normale karten und (" + countRasse + "/)10 RASSE Karten ins Deck gegebne werden", "", 3500);
-                    }
-                    return true;
+                    toaster.pop('warning', "Es können bis zu (" + countCard + "/)40 Normale karten und (" + countRasse + "/)10 RASSE Karten ins Deck gegebne werden", "", 3500);
                 }
-
-            });
-        deferred.resolve();
+                return true;
+            }
+        });
     }
+
 });
