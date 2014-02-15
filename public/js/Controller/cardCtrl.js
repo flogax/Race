@@ -8,7 +8,27 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
     $scope.nCard = new Card();
 
     $scope.showCard = function (card) {
-        var html = "<div class='card-tool' style='background-color: " + card.color[0].name + "'> " +
+        console.log(card);
+        var rarity;
+        if ($scope.checkRar('co', card.rarity)) {
+            rarity = 'b-com';
+        } else if ($scope.checkRar('un', card.rarity)) {
+            rarity = 'b-uncom';
+        } else if ($scope.checkRar('ra', card.rarity)) {
+            rarity = 'b-rar';
+        } else if ($scope.checkRar('ep', card.rarity)) {
+            rarity = 'b-epic';
+        } else {
+            rarity = 'b-com';
+        }
+
+        var white = '';
+        if (card.color[0].name === 'black' || card.color[0].name === 'grey') {
+            white = "white-color";
+        }
+
+
+        var html = "<div class='card-tool " + rarity + " " + white + "' style='background-color: " + card.color[0].name + "'> " +
             "<span class='name'>" + card.name + "</span>" +
             "<span class='typ'>" + card.typ[0].name + "</span>" +
             "<span class='bild'>text.jpg</span>" +
@@ -130,17 +150,6 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
         if (ver === -1) {
             return "";
         }
-        return ver;
-    };
-
-
-    /*<div class="col-md-1"><span ng-bind="checkCost(card.cost)"></span></div>
-     <div class="col-md-1"><span ng-bind="checkLive(card.live)"></span></div>
-     <div class="col-md-1"><span ng-bind="checkAtk(card.atk)"></span></div>
-     <div class="col-md-1"><span ng-bind="checkVer(card.ver)"></span></div>
-     <div class="col-md-2"><span ng-repeat="typ in card.typ" ng-bind="typ.name"></span></div>
-     <div class="col-md-1"><span ng-repeat="color in card.color" ng-bind="color.name"></span></div>
-     <div class="col-md-1"><span ng-bind="card.edition.name"></span></div>
-     <div class="col-md-1"><span ng-bind="card.hidden"></span></div>*/
+    }
 
 });

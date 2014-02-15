@@ -120,11 +120,11 @@
             <div class="col-md-6">
                 <div class="card" style="background-color: {{nCard.color.name}}"
                      ng-class="{'b-com': checkRar('co',nCard.rarity), 'b-uncom': checkRar('un',nCard.rarity) ,'b-rar': checkRar('ra',nCard.rarity) , 'b-epic': checkRar('ep',nCard.rarity)}">
-                    <span ng-bind="nCard.name"></span>
-                    <span ng-bind="nCard.typ.name"></span>
+                    <span class="name" ng-bind="nCard.name"></span>
+                    <span class="typ" ng-bind="nCard.typ.name"></span>
                     <span ng-bind="nCard.edition.name"></span>
-                    <span ng-bind="nCard.live"></span>
-                    <span ng-bind="nCard.cost"></span>
+                    <span class="live" ng-bind="nCard.live"></span>
+                    <span class="cost" ng-bind="nCard.cost"></span>
                     <span ng-bind="nCard.ability"> </span>
                     <span ng-bind="nCard.text"> </span>
                     <span ng-bind="nCard.atk"> </span>
@@ -148,10 +148,10 @@
             <div class="row">
                 <h2>Cards</h2>
 
-                <div class="row hov show-Card col-md-4" ng-repeat="card in cards | filter:search:strict "
+                <div class="row hov show-card col-md-4" ng-repeat="card in cards | filter:search:strict "
                      ng-click="loadCard(card)" tooltip-placement="bottom" tooltip-html-unsafe="{{showCard(card)}}"
                      tooltip-popup-delay='1000'>
-                <div class="col-md-3"><span ng-bind="card.name"></span></div>
+                    <div><span ng-bind="card.name"></span></div>
                 </div>
             </div>
         </div>

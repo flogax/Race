@@ -28,29 +28,16 @@ var api = {
 
     find: function (model, pop) {
         return function (req, res, next) {
-            var query;
-            var id = req.params.id;
-            console.log(typeof id);
-            try {
-                query = model.findById(id);
-            } catch (ex) {
-                query = model.findOne({ _id: id });
-            }
+            var query = model.findById(req.params.id);
             if (pop) {
-                console.log(pop);
                 query = query.populate(pop);
             }
-            Q.when(query.exec(function (err, data) {
-                console.log(data);
-                if (err) {
-                    console.error("Error finding %s with ID %s: %j", Model.modelName, req.id, err);
-                    return res.json(500, err);
-                } else if (!data) {
+            Q.when(query.exec()).then(function (data) {
+                if (!data) {
                     return res.send(404);
                 }
-                console.log(data);
                 return res.json(data);
-            }));
+            });
         };
     },
 

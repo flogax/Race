@@ -1,10 +1,10 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
 div.regeln p {
@@ -57,10 +57,37 @@ div.links ul {
 .card {
     -webkit-print-color-adjust: exact;
     display: inline-block;
+    position: absolute;
     border: solid 5px;
     border-radius: 10px;
     width: 61mm;
     height: 86mm;
+    color: black;
+    font-size: 0.7em;
+}
+
+.card .name {
+    position: absolute;
+    top: 0.5mm;
+    left: 2mm;
+}
+
+.card .typ {
+    position: absolute;
+    top: 0.5mm;
+    right: 2mm;
+}
+
+.card .cost {
+    position: absolute;
+    top: 28mm;
+    left: 2mm;
+}
+
+.card .live {
+    position: absolute;
+    top: 28mm;
+    right: 2mm;
 }
 
 .card-tool {
@@ -74,6 +101,7 @@ div.links ul {
     width: 30.5mm;
     height: 43mm;
     font-size: 0.5em;
+    color: black;
 }
 
 .card-tool .name {
@@ -152,6 +180,26 @@ div.links ul {
 
 .card.b-epic {
     border-color: #880088;
+}
+
+.card-tool.b-com {
+    border-color: #000;
+}
+
+.card-tool.b-uncom {
+    border-color: #999999;
+}
+
+.card-tool.b-rar {
+    border-color: #e38d13;
+}
+
+.card-tool.b-epic {
+    border-color: #880088;
+}
+
+.card-tool.white-color {
+    color: white;
 }
 
 div.row div.btn-group.col-md-3 button.btn.btn-default.dropdown-toggle {
