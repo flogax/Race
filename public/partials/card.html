@@ -1,122 +1,139 @@
 <div class="col-md-12">
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-6">
-                <button class="btn btn-default">Bild Upload</button>
-                <span>test/test/test.png</span><br/>
+    <div class="jumbotron" ng-init="newCard = false">
+        <div class="row" ng-show="newCard">
+            <span class="glyphicon glyphicon-minus-sign clickable" ng-click="newCard = false">Close</span>
 
-                <form name="form" class="form-horizontal" novalidate ng-submit="newCard()">
-                    <input class="form-control" type="text" name="cardname" placeholder="Kartenname"
-                           ng-model="nCard.name" required>
-                    <input class="form-control" type="NUMBER" min="0" ng-model="nCard.cost" placeholder="Kosten"
-                           required>
-                    <!-- Rarity Auswahl -->
-                    <div class="row">
-                        <div class="btn-group col-md-3">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                Rarity <span class="caret"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="border">
+                        <button class="btn btn-default" ng-show="auth.restrictTo('admin')">Bild Upload</button>
+                        <span ng-show="auth.restrictTo('admin')">test/test/test.png</span><br
+                            ng-show="auth.restrictTo('admin')"/>
+
+
+                        <h2>Create a New Card</h2>
+
+                        <form name="form" class="form-horizontal form-group" novalidate ng-submit="newCard()">
+                            <input class="form-control" type="text" name="cardname" placeholder="Kartenname"
+                                   ng-model="nCard.name" required>
+                            <input class="form-control" type="NUMBER" min="0" ng-model="nCard.cost" placeholder="Kosten"
+                                   required>
+                            <!-- Rarity Auswahl -->
+                            <div class="row">
+                                <div class="btn-group col-md-3">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        Rarity <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="" ng-click="nCard.rarity = 'commen'"><span>Commen</span></a></li>
+                                        <li><a href="" ng-click="nCard.rarity = 'uncommen'"><span>Uncommen</span></a>
+                                        </li>
+                                        <li><a href="" ng-click="nCard.rarity = 'rar'"><span>Rar</span></a></li>
+                                        <li><a href="" ng-click="nCard.rarity = 'epic'"><span>Epic</span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="cardrarity" placeholder="Seltenheit"
+                                           ng-model="nCard.rarity" required disabled>
+                                </div>
+                            </div>
+
+                            <!-- Editon Auswahl -->
+                            <div class="row">
+                                <div class="btn-group col-md-3">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        Editions <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-repeat="edi in editions"><a href="" ng-click="nCard.edition = edi"><span
+                                                ng-bind="edi.name"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="cardedition" placeholder="Edition"
+                                           ng-model="nCard.edition.name" required disabled>
+                                </div>
+                            </div>
+                            <!-- Typ Auswahl -->
+                            <div class="row">
+                                <div class="btn-group col-md-3">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        Typ:<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-repeat="typ in typs"><a href="" ng-click="nCard.typ = typ"><span
+                                                ng-bind="typ.name"></span></a></li>
+                                    </ul>
+
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="cardtyp" placeholder="Karten Typ"
+                                           ng-model="nCard.typ.name" required disabled>
+                                </div>
+                            </div>
+
+                            <!-- Color Auswahl -->
+                            <div class="row">
+                                <div class="btn-group col-md-3">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        Colors <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-repeat="color in colors"><a href="" ng-click="nCard.color = color"><span
+                                                ng-bind="color.name"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="cardcolor" placeholder="Karten Farbe"
+                                           ng-model="nCard.color.name" required disabled>
+                                </div>
+                            </div>
+                            <textarea class="form-control" ng-model="nCard.ability"
+                                      placeholder="Fähigkeit der Karte"></textarea>
+
+
+                            <!-- Typ Spezifisch -->
+                            <div ng-show="checkTyp('atk',nCard.typ.name)">
+                                <input class="form-control" type="NUMBER" min="0" ng-model="nCard.atk" placeholder="ATK"
+                                        >
+                                <input class="form-control" type="NUMBER" min="0" ng-model="nCard.ver" placeholder="VER"
+                                        >
+                            </div>
+
+                            <div ng-show="checkTyp('live',nCard.typ.name)">
+                                <input class="form-control" type="NUMBER" min="0" ng-model="nCard.live"
+                                       placeholder="Leben"
+                                        >
+                            </div>
+                            <div ng-init="hidden = false">
+                            <span class="glyphicon glyphicon-plus-sign" ng-click="hidden = true"
+                                  ng-hide="hidden"></span>
+                            <span class="glyphicon glyphicon-minus-sign" ng-click="hidden = false"
+                                  ng-show="hidden"></span>
+                                <!-- Zusatz informationen -->
+                                <div ng-show="hidden">
+                                    <textarea class="form-control" ng-model="nCard.text"
+                                              placeholder="Text, wird auf der Karte angezeigt"></textarea>
+                                    <textarea class="form-control" ng-model="nCard.info"
+                                              placeholder="Zusatzinformation, wird nicht auf der Karte Angezeigt"></textarea>
+                                </div>
+
+                            </div>
+                            <div class="form-group has-error">
+                                <span class="help-block" ng-bind="errorMsg"></span>
+                            </div>
+                            <button class="btn btn-primary" ng-click="reset()">Reset
                             </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="" ng-click="nCard.rarity = 'commen'"><span>Commen</span></a></li>
-                                <li><a href="" ng-click="nCard.rarity = 'uncommen'"><span>Uncommen</span></a></li>
-                                <li><a href="" ng-click="nCard.rarity = 'rar'"><span>Rar</span></a></li>
-                                <li><a href="" ng-click="nCard.rarity = 'epic'"><span>Epic</span></a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-9">
-                            <input class="form-control" type="text" name="cardrarity" placeholder="Seltenheit"
-                                   ng-model="nCard.rarity" required disabled>
-                        </div>
+                            <button class="btn btn-primary" type="submit"
+                                    ng-disabled="form.$invalid || !form.$dirty">Anlegen
+                            </button>
+                        </form>
                     </div>
-
-                    <!-- Editon Auswahl -->
-                    <div class="row">
-                        <div class="btn-group col-md-3">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Editions <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="edi in editions"><a href="" ng-click="nCard.edition = edi"><span
-                                    ng-bind="edi.name"></span></a></li>
-                        </ul>
-                    </div>
-                        <div class="col-md-9">
-                        <input class="form-control" type="text" name="cardedition" placeholder="Edition"
-                           ng-model="nCard.edition.name" required disabled>
-                        </div>
-                    </div>
-                    <!-- Typ Auswahl -->
-                    <div class="row">
-                        <div class="btn-group col-md-3">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Typ:<span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="typ in typs"><a href="" ng-click="nCard.typ = typ"><span
-                                    ng-bind="typ.name"></span></a></li>
-                        </ul>
-
-                    </div>
-                        <div class="col-md-9">
-                        <input class="form-control" type="text" name="cardtyp" placeholder="Karten Typ"
-                           ng-model="nCard.typ.name" required disabled>
-                        </div>
-                    </div>
-
-                    <!-- Color Auswahl -->
-                    <div class="row">
-                        <div class="btn-group col-md-3">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Colors <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="color in colors"><a href="" ng-click="nCard.color = color"><span
-                                    ng-bind="color.name"></span></a></li>
-                        </ul>
-                    </div>
-                        <div class="col-md-9">
-                        <input class="form-control" type="text" name="cardcolor" placeholder="Karten Farbe"
-                           ng-model="nCard.color.name" required disabled>
-                        </div>
-                    </div>
-                    <textarea class="form-control" ng-model="nCard.ability"
-                              placeholder="Fähigkeit der Karte"></textarea>
-
-
-                    <!-- Typ Spezifisch -->
-                    <div ng-show="checkTyp('atk',nCard.typ.name)">
-                        <input class="form-control" type="NUMBER" min="0" ng-model="nCard.atk" placeholder="ATK"
-                                >
-                        <input class="form-control" type="NUMBER" min="0" ng-model="nCard.ver" placeholder="VER"
-                                >
-                    </div>
-
-                    <div ng-show="checkTyp('live',nCard.typ.name)">
-                        <input class="form-control" type="NUMBER" min="0" ng-model="nCard.live" placeholder="Leben"
-                                >
-                    </div>
-                    <div ng-init="hidden = false">
-                        <span class="glyphicon glyphicon-plus-sign" ng-click="hidden = true" ng-hide="hidden"></span>
-                        <span class="glyphicon glyphicon-minus-sign" ng-click="hidden = false" ng-show="hidden"></span>
-                        <!-- Zusatz informationen -->
-                        <div ng-show="hidden">
-                            <textarea class="form-control" ng-model="nCard.text"
-                                      placeholder="Text, wird auf der Karte angezeigt"></textarea>
-                            <textarea class="form-control" ng-model="nCard.info"
-                                      placeholder="Zusatzinformation, wird nicht auf der Karte Angezeigt"></textarea>
-                        </div>
-
-                    </div>
-                    <div class="form-group has-error">
-                        <span class="help-block" ng-bind="errorMsg"></span>
-                    </div>
-                    <button class="btn btn-primary pull-right" ng-click="reset()">Reset
-                    </button>
-                    <button class="btn btn-primary pull-right" type="submit"
-                            ng-disabled="form.$invalid || !form.$dirty">Anlegen
-                    </button>
-                </form>
-            </div>
+                </div>
             <div class="col-md-6">
                 <div class="card" style="background-color: {{nCard.color.name}}"
                      ng-class="{'b-com': checkRar('co',nCard.rarity), 'b-uncom': checkRar('un',nCard.rarity) ,'b-rar': checkRar('ra',nCard.rarity) , 'b-epic': checkRar('ep',nCard.rarity)}">
@@ -131,25 +148,49 @@
                     <span ng-bind="nCard.ver"> </span>
                 </div>
             </div>
+            </div>
         </div>
         <div ng-init="showSearch = false">
-            <input type="text" ng-model="search.$" placeholder="Search All" class="input-sm">
 
-            <div ng-show="showSearch">
-                <input type="text" ng-model="search.name" placeholder="Search Name" class="input-sm">
-                <input type="text" ng-model="search.atk" placeholder="Search Atk" class="input-sm">
-                <input type="text" ng-model="search.ver" placeholder="Search Ver" class="input-sm">
-                <input type="text" ng-model="search.typ" placeholder="Search typ" class="input-sm">
-                <input type="text" ng-model="search.color" placeholder="Search color" class="input-sm">
-            </div>
-            <span class="glyphicon glyphicon-plus-sign" ng-click="showSearch = true" ng-hide="showSearch"></span>
-            <span class="glyphicon glyphicon-minus-sign" ng-click="showSearch = false" ng-show="showSearch"></span>
 
             <div class="row">
-                <h2>Cards</h2>
+                <h2>Cards
+                    <small><span class="glyphicon glyphicon-plus-sign clickable" ng-click="newCard = true"
+                                 ng-hide="newCard"></span>
+                        <span class="glyphicon glyphicon-minus-sign clickable" ng-click="newCard = false"
+                              ng-show="newCard"></span></small>
+                </h2>
+                <div class="row">
+                    <span class="col-md-10">
+                <input type="text" ng-model="search.$" placeholder="Search All" class="form-control">
+                        </span>
+                    <span class="col-md-2">
+                    <span class="glyphicon glyphicon-plus-sign clickable" ng-click="showSearch = true"
+                          ng-hide="showSearch"></span>
+                    <span class="glyphicon glyphicon-minus-sign clickable" ng-click="showSearch = false"
+                          ng-show="showSearch"></span>
+                    <span class="glyphicon glyphicon-refresh clickable" ng-click="search = null"></span>
+                    </span>
+
+                    <div ng-show="showSearch">
+                        <span class="col-md-2"><input type="text" ng-model="search.name" placeholder="Search Name"
+                                                      class="form-control"></span>
+                        <span class="col-md-2"><input type="number" ng-model="search.atk" placeholder="Search Atk"
+                                                      class="form-control"></span>
+                        <span class="col-md-2"><input type="number" ng-model="search.ver" placeholder="Search Ver"
+                                                      class="form-control"></span>
+                        <span class="col-md-3"><input type="text" ng-model="search.typ" placeholder="Search typ"
+                                                      class="form-control"></span>
+                        <span class="col-md-3"><input type="text" ng-model="search.color" placeholder="Search color"
+                                                      class="form-control"></span>
+                    </div>
+
+
+                </div>
 
                 <div class="row hov show-card col-md-4" ng-repeat="card in cards | filter:search:strict "
-                     ng-click="loadCard(card)" tooltip-placement="bottom" tooltip-html-unsafe="{{showCard(card)}}"
+                     ng-click="newCard = true; loadCard(card)" tooltip-placement="bottom"
+                     tooltip-html-unsafe="{{showCard(card)}}"
                      tooltip-popup-delay='1000'>
                     <div><span ng-bind="card.name"></span></div>
                 </div>

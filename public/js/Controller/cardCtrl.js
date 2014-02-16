@@ -32,18 +32,22 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
             "<span class='name'>" + card.name + "</span>" +
             "<span class='typ'>" + card.typ[0].name + "</span>" +
             "<span class='bild'>text.jpg</span>" +
-            "<span class='edition'>" + card.edition.name + "</span>" +
-            "<span class='live'>" + card.live + "</span>" +
-            "<span class='cost'>" + card.cost + "</span>" +
+            "<span class='edition'>" + card.edition.name + "</span>"
+        if (card.live > -1) {
+            html += "<span class='live'>" + card.live + "</span>";
+        }
+        html += "<span class='cost'>" + card.cost + "</span>" +
             "<span class='txt-abi'>" +
             "<span class='ability'>" + card.ability + "</span>" +
             "<span class='text'>" + card.text + " </span>" +
-            "</span>" +
-            "<span class='werte'>" +
-            "<span> " + card.atk + "</span>/" +
-            "<span>" + card.ver + " </span>" +
-            "</span>" +
-            "</div>";
+            "</span>";
+        if (!(card.atk < 0 || card.ver < 0 )) {
+            html += "<span class='werte'>" +
+                "<span> " + card.atk + "</span>/" +
+                "<span>" + card.ver + " </span>" +
+                "</span>";
+        }
+        html += "</div>";
 
         return html;
 
