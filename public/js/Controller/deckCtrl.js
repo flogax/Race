@@ -1,4 +1,4 @@
-app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, Card, Deck, User, toaster) {
+app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, cardPrintService, Card, Deck, User, toaster) {
 
     var user;
 
@@ -15,10 +15,21 @@ app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, Card, D
             });
         } else {
             $location.path('race/home');
-
         }
 
     }
+
+    $scope.print = function (deck) {
+        cardPrintService.setCarsMulit(deck.cards).then(function () {
+            $location.path('race/print');
+        });
+    };
+
+    $scope.printSingle = function (deck) {
+        cardPrintService.setCardsSingle(deck.cards).then(function () {
+            $location.path('race/print');
+        });
+    };
 
     $scope.$on('logout', function () {
         $location.path('race/home');
@@ -69,14 +80,12 @@ app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, Card, D
         checkDeck($scope.wDeck).then(function (bool) {
             console.log(bool);
             if (bool) {
-                toaster.pop('success', "Deck könnte gespeichert werden", "", 4000);
+                toaster.pop('success', "Deck wurde erfolgreich Gespeichert", "", 2000);
+                Deck.save($scope.wDeck);
             } else {
-                toaster.pop('error', "Deck konnte nich gespeichert werden da es eine Falsche struktur hat ", "", 4000);
+                toaster.pop('error', "Deck konnte nich gespeichert werden da es eine Falsche struktur hat ", "", 6000);
             }
         });
-
-        Deck.save($scope.wDeck);
-        // toaster.pop('success', "Deck wurde erfolgreich Gespeichert", "", 2000);
         init();
     };
 
@@ -114,7 +123,14 @@ app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, Card, D
         }
     };
 
-    $scope.checkUser = function (id) {
+    $scope.checkUser = function (user) {
+        var id;
+        if (user.id) {
+            id = user.id;
+        } else {
+            id = user;
+        }
+
         if (AuthService.user) {
             return AuthService.checkUser(id);
         }
@@ -155,14 +171,14 @@ app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, Card, D
                         toaster.pop('error', "Es können von Rassen jeweils nur eine Karte, pro Rasse, ins deck gegeben werden!", "", 5000);
                         boolFalse = true;
                     } else {
-                        countRasse += card.stk;
+                        countRasse += parseInt(card.stk);
                     }
                 } else {
                     if (card.stk > 3) {
                         toaster.pop('error', "Es können von normalen Karten nur maximal 3 stk, ins deck gegeben werden!", "", 5000);
                         boolFalse = true;
                     } else {
-                        countCard += card.stk;
+                        countCard += parseInt(card.stk);
                     }
                 }
                 deferred.resolve();
@@ -177,7 +193,7 @@ app.controller('DeckCtrl', function ($scope, $location, $q, AuthService, Card, D
                 if (countCard > 40 || countRasse > 10) {
                     toaster.pop('error', "Es können maximal (" + countCard + "/)40 Normale karten oder (" + countRasse + "/)10 RASSE Karten, ins Deck gegebne werden", "", 5000);
                     return false
-                } else {
+                } else if (countCard < 40 || countRasse < 10) {
                     toaster.pop('warning', "Es können bis zu (" + countCard + "/)40 Normale karten und (" + countRasse + "/)10 RASSE Karten ins Deck gegebne werden", "", 3500);
                 }
                 return true;

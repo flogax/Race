@@ -54,6 +54,22 @@ div.links ul {
     background-color: #000000;
 }
 
+.card-rep {
+    display: inline-block;
+    position: relative;
+    border: solid 5px;
+    border-radius: 10px;
+    width: 61mm;
+    height: 86mm;
+    color: black;
+    font-size: 0.7em;
+}
+
+.in-block-no-margin {
+    display: inline-block;
+    margin: 0px;
+}
+
 .card {
     -webkit-print-color-adjust: exact;
     display: inline-block;

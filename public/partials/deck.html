@@ -22,12 +22,12 @@
                 <input type="text" ng-model="search.user" placeholder="Search User Nickname" class="input-sm">
             </div>
             <div class="row">
-            <div class="hov-click col-md-3 show-deck" ng-repeat="deck in decks | filter:search:strict"
-                 ng-click="openDeck(deck)">
-                <span class="name col-md-12" ng-bind="deck.name"></span>
-                <span class="username col-md-4" ng-bind="deck.user.nickname"></span>
-                <span class="metadata col-md-8">METADATA PLATZ HALTER</span>
-            </div>
+                <div class="hov-click col-md-3 show-deck" ng-repeat="deck in decks | filter:search:strict"
+                     ng-click="openDeck(deck)">
+                    <span class="name col-md-12" ng-bind="deck.name"></span>
+                    <span class="username col-md-4" ng-bind="deck.user.nickname"></span>
+                    <span class="metadata col-md-8">METADATA PLATZ HALTER</span>
+                </div>
             </div>
         </div>
 
@@ -45,9 +45,11 @@
                 <input type="text" ng-model="card.stk" class="input-sm">
                 <span class="glyphicon glyphicon-trash" ng-click="removeCard(card, $index)">Remove</span>
             </div>
-            <div ng-show="checkUser(wDeck.user.id) || auth.restrictTo('admin')">
-            <span class="glyphicon glyphicon-plus-sign" ng-click="sCards = true">AddCards</span>
-            <button ng-click="save()" class="btn btn-info">Save</button>
+            <div ng-show="checkUser(wDeck.use) || auth.restrictTo('admin')">
+                <span class="glyphicon glyphicon-plus-sign" ng-click="sCards = true">AddCards</span>
+                <button ng-click="save()" class="btn btn-info">Save</button>
+                <button ng-click="printSingle(wDeck)">PrintS</button>
+                <button ng-click="print(wDeck)">PrintM</button>
             </div>
             <div class="row" ng-show="sCards">
                 <input type="text" ng-model="search.$" placeholder="Search All">
