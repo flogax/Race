@@ -10,6 +10,7 @@ app.config(function ($routeProvider, $locationProvider) {
         when('/race/cards', { templateUrl: '/public/partials/card.html', controller: 'CardCtrl'}).
         when('/race/decks', { templateUrl: '/public/partials/deck.html', controller: 'DeckCtrl'}).
         when('/race/print', { templateUrl: '/public/partials/print.html', controller: 'PrintCtrl'}).
+        when('/race/test', { templateUrl: '/public/partials/test.html'}).
         otherwise({ redirectTo: '/race/home' });
     $locationProvider.html5Mode(true);
 });

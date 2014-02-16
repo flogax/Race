@@ -66,168 +66,9 @@ div.links ul {
     background-color: #000000;
 }
 
-.card-rep {
-    display: inline-block;
-    position: relative;
-    border: solid 5px;
-    border-radius: 10px;
-    width: 61mm;
-    height: 86mm;
-    color: black;
-    font-size: 0.7em;
-}
-
 .in-block-no-margin {
     display: inline-block;
     margin: 0px;
-}
-
-.card {
-    -webkit-print-color-adjust: exact;
-    display: inline-block;
-    position: absolute;
-    border: solid 5px;
-    border-radius: 10px;
-    width: 61mm;
-    height: 86mm;
-    color: black;
-    font-size: 0.7em;
-}
-
-.card .name {
-    position: absolute;
-    top: 0.5mm;
-    left: 2mm;
-}
-
-.card .typ {
-    position: absolute;
-    top: 0.5mm;
-    right: 2mm;
-}
-
-.card .cost {
-    position: absolute;
-    top: 28mm;
-    left: 2mm;
-}
-
-.card .live {
-    position: absolute;
-    top: 28mm;
-    right: 2mm;
-}
-
-.card-tool {
-    -webkit-print-color-adjust: exact;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    display: inline-block;
-    border: solid 2px;
-    border-radius: 5px;
-    width: 30.5mm;
-    height: 43mm;
-    font-size: 0.5em;
-    color: black;
-}
-
-.card-tool .name {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-}
-
-.card-tool .typ {
-    position: absolute;
-    top: 1px;
-    right: 1px;
-}
-
-.card-tool .werte {
-    position: absolute;
-    bottom: 1px;
-    left: 1px;
-}
-
-.card-tool .live {
-    position: absolute;
-    top: 20mm;
-    right: 1px;
-}
-
-.card-tool .cost {
-    position: absolute;
-    top: 20mm;
-    left: 1px;
-}
-
-.card-tool .txt-abi {
-    position: absolute;
-    top: 22mm;
-    left: 1mm;
-    height: 17mm;
-    width: 27.5mm;
-    margin-right: 2px;
-    border-radius: 5px;
-    border-style: solid;
-    border-width: 1px;
-    background-color: #999999;
-}
-
-.card-tool .edition {
-    position: absolute;
-    bottom: 1px;
-    right: 1px;
-}
-
-.card-tool .bild {
-    position: absolute;
-    top: 3mm;
-    left: 1mm;
-    height: 15mm;
-    width: 27.5mm;
-    margin-right: 2px;
-    border-radius: 5px;
-    border-style: solid;
-    border-width: 1px;
-    background-color: #999999;
-}
-
-.card.b-com {
-    border-color: #000;
-}
-
-.card.b-uncom {
-    border-color: #999999;
-}
-
-.card.b-rar {
-    border-color: #e38d13;
-}
-
-.card.b-epic {
-    border-color: #880088;
-}
-
-.card-tool.b-com {
-    border-color: #000;
-}
-
-.card-tool.b-uncom {
-    border-color: #999999;
-}
-
-.card-tool.b-rar {
-    border-color: #e38d13;
-}
-
-.card-tool.b-epic {
-    border-color: #880088;
-}
-
-.card-tool.white-color {
-    color: white;
 }
 
 div.row div.btn-group.col-md-3 button.btn.btn-default.dropdown-toggle {
@@ -262,4 +103,150 @@ div.row div.btn-group.col-md-3 button.btn.btn-default.dropdown-toggle {
     border-style: solid;
     border-width: 2px;
     margin: 2px;
+}
+
+/*---- Card styles ----*/
+
+.card {
+    -webkit-print-color-adjust: exact;
+    position: relative;
+    color: black;
+    background-color: #ffffff;
+}
+
+.card-absolut {
+    position: absolute;
+!important
+}
+
+.card.card-inline {
+    display: inline-block;
+}
+
+.card.card-sm {
+    border-radius: 5px;
+    border: solid 2px;
+    width: 30.5mm;
+    height: 43mm;
+    font-size: 0.5em;
+}
+
+.card.card-md {
+    border-radius: 7px;
+    border: solid 3px;
+    width: 61mm;
+    height: 86mm;
+    font-size: 1em;
+}
+
+.card.card-lg {
+    border-radius: 9px;
+    border: solid 4px;
+    width: 91.5mm;
+    height: 129mm;
+    font-size: 1.5em;
+}
+
+/* ------ Card Atributes styles ------ */
+
+.card .name {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+}
+
+.card .typ {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+}
+
+.card .cost {
+    position: absolute;
+    top: 47%;
+    left: 1%;
+}
+
+.card .live {
+    position: absolute;
+    top: 47%;
+    right: 1%;
+}
+
+.card .info {
+    position: absolute;
+    top: 53%;
+    width: 96%;
+    height: 40%;
+    right: 2%;
+    border: inherit;
+    border-radius: inherit;
+}
+
+.card .info .text {
+    position: absolute;
+    bottom: 1%;
+    width: 98%;
+    left: 1%;
+    font-size: 65%;
+    font-style: italic
+}
+
+.card .info .ability {
+    font-size: 85%;
+    position: absolute;
+    top: 1%;
+    width: 98%;
+    left: 1%;
+}
+
+.card .info .ability.sm-txt {
+    font-size: 50%;
+}
+
+.card .info .ability.md-txt {
+    font-size: 100%;
+}
+
+.card .info .ability.lg-txt {
+    font-size: 150%;
+}
+
+.card .pic {
+    position: absolute;
+    top: 6%;
+    width: 96%;
+    height: 40%;
+    right: 2%;
+    border: inherit;
+    border-radius: inherit;
+}
+
+.card .werte {
+    position: absolute;
+    bottom: 1%;
+    left: 1%;
+}
+
+.card .edition {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+}
+
+/*---- Card Rarity ------ */
+.card.b-com {
+    border-color: #000;
+}
+
+.card.b-uncom {
+    border-color: #999999;
+}
+
+.card.b-rar {
+    border-color: #e38d13;
+}
+
+.card.b-epic {
+    border-color: #880088;
 }

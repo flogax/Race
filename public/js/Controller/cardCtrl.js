@@ -7,10 +7,7 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
     $scope.nCstyle = {};
 
     $scope.setStyle = function (color) {
-        console.log('Test');
-        console.log(color);
         var colors = cardPrintService.getColor(color.name);
-        console.log(colors);
         $scope.nCstyle = {'background-color': colors.back, 'color': colors.font };
     };
 
@@ -36,23 +33,23 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
         }
         var colors = cardPrintService.getColor(card.color[0].name);
 
-        var html = "<div class='card-tool " + rarity + " " + white + "' style='background-color: " + colors.back + "; color: " + colors.font + "'> " +
+        var html = "<div class='card card-md card-inline" + rarity + " " + white + "' style='background-color: " + colors.back + "; color: " + colors.font + "'> " +
             "<span class='name'>" + card.name + "</span>" +
             "<span class='typ'>" + card.typ[0].name + "</span>" +
-            "<span class='bild'>text.jpg</span>" +
+            "<span class='pic'>text.jpg</span>" +
             "<span class='edition'>" + card.edition.name + "</span>"
         if (card.live > -1) {
             html += "<span class='live'>" + card.live + "</span>";
         }
         html += "<span class='cost'>" + card.cost + "</span>" +
-            "<span class='txt-abi'>" +
+            "<span class='info'>" +
             "<span class='ability'>" + card.ability + "</span>" +
             "<span class='text'>" + card.text + " </span>" +
             "</span>";
         if (!(card.atk < 0 || card.ver < 0 )) {
             html += "<span class='werte'>" +
-                "<span> " + card.atk + "</span>/" +
-                "<span>" + card.ver + " </span>" +
+                "<span class='atk'> " + card.atk + "</span>/" +
+                "<span class='ver'>" + card.ver + " </span>" +
                 "</span>";
         }
         html += "</div>";

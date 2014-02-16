@@ -10,17 +10,21 @@
                 </h2>
 
                 <span ng-show="newDeck">
-                    <input type="text" ng-model="nDeck.name" class="input-sm"><span
-                        class="glyphicon glyphicon-plus clickable"
-                        ng-click="newDeck=false ;createDeck()">ADD</span>
+                    <span class="col-md-4"><input type="text" ng-model="nDeck.name" class="form-control"
+                                                  placeholder="New Deck Name"></span>
+                    <span class="glyphicon glyphicon-plus clickable" ng-click="newDeck=false ;createDeck()">
+                        ADD
+                    </span>
                 </span>
             </div>
         </div>
 
         <div class="row" ng-hide="open">
             <div class="row">
-                <input type="text" ng-model="search.name" placeholder="Search Deck Name" class="input-sm">
-                <input type="text" ng-model="search.user" placeholder="Search User Nickname" class="input-sm">
+                <span class="col-md-5">  <input type="text" ng-model="search.name" placeholder="Search Deck Name"
+                                                class="form-control"></span>
+                <span class="col-md-5"> <input type="text" ng-model="search.user" placeholder="Search User Nickname"
+                                               class="form-control"></span>
             </div>
             <div class="row">
                 <div class="hov-click col-md-3 show-deck" ng-repeat="deck in decks | filter:search:strict"

@@ -27,7 +27,7 @@
                 <li ng-class="{active: isActive('/race/decks')}" ng-show="auth.user"><a href="/race/decks">Decks</a>
                 </li>
                 <li ng-class="{active: isActive('/race/user')}" ng-show="auth.restrictTo('operrator')"><a
-                        href="/race/user">Admin User</a></li>
+                        href="/race/test">Admin User</a></li>
             </ul>
             <p class="navbar-text navbar-right opac-null" ng-show="auth.user">
                 <span ng-bind="auth.user.nickname"></span> |&nbsp;<a href="#" ng-click="logout()"
