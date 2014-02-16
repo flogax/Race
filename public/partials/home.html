@@ -5,15 +5,14 @@
 
         <div ng-show="getBool(showAdd,auth.restrictTo('admin'))">
             <span>Header:</span><input type="text" class="form-control" ng-model="newNews.header"/>
-            <span>Date:</span><input type="DATE" class="input-sm" ng-model="newNews.date"/>
-
-            <h4>Popup</h4>
+            <span>Date:</span>
 
             <div class="row">
                 <div class="col-md-6">
                     <p class="input-group">
-                        <input type="text" class="form-control" datepicker-popup="dd.MMMM.yyyy" ng-model="newNews.date"
-                               is-open="opened" min="minDate" max="'2015-06-22'" ng-required="true" close-text="Close"/>
+                        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt"
+                               is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
+                               date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
               <span class="input-group-btn">
                 <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i>
                 </button>
@@ -21,7 +20,6 @@
                     </p>
                 </div>
             </div>
-
             <span>News:</span><textarea class="form-control" ng-model="newNews.message"></textarea>
             <button ng-click="submit()">Anlegen</button>
         </div>

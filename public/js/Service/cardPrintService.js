@@ -66,4 +66,8 @@ common.service('cardPrintService', function ($q, $http, $location, $rootScope, C
         });
     };
 
+    this.getColor = function (colorString) {
+        return '#fff';
+    }
+
 });

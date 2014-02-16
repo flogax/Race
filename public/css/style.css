@@ -39,6 +39,10 @@ div.links ul {
     cursor: pointer;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .tabl {
     background-color: #333333;
     border-radius: 10px;

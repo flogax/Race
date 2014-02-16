@@ -3,15 +3,16 @@
         <div class="row">
             <div class="row" ng-init="newDeck=false">
                 <h2>Decks
-                    <small><span class="glyphicon glyphicon-plus-sign" ng-click="newDeck = true"
+                    <small><span class="glyphicon glyphicon-plus-sign clickable" ng-click="newDeck = true"
                                  ng-hide="newDeck"></span>
-                        <span class="glyphicon glyphicon-minus-sign" ng-click="newDeck = false"
+                        <span class="glyphicon glyphicon-minus-sign clickable" ng-click="newDeck = false"
                               ng-show="newDeck"></span></small>
                 </h2>
 
                 <span ng-show="newDeck">
-                    <input type="text" ng-model="nDeck.name" class="input-sm"><span class="glyphicon glyphicon-plus"
-                                                                                    ng-click="newDeck=false ;createDeck()">ADD</span>
+                    <input type="text" ng-model="nDeck.name" class="input-sm"><span
+                        class="glyphicon glyphicon-plus clickable"
+                        ng-click="newDeck=false ;createDeck()">ADD</span>
                 </span>
             </div>
         </div>
@@ -32,37 +33,47 @@
         </div>
 
         <div class="row" ng-show="open" ng-init="sCards = false">
-            <div>
+            <div class="row">
                 <h3><span ng-bind="wDeck.name"></span>
-                    <small><span class="glyphicon glyphicon-minus-sign" ng-click="open=false">Close</span></small>
+                    <small><span class="glyphicon glyphicon-minus-sign clickable" ng-click="open=false">Close</span>
+                    </small>
                 </h3>
             </div>
-            <div ng-repeat="card in wDeck.cards" ng-init="sCard = getCard(card)">
-                <span ng-bind="sCard.name"></span>
-                <span ng-bind="sCard.edition.name"></span>
-                <span ng-bind="sCard.atk"></span>
-                <span ng-bind="sCard.ver"></span>
-                <input type="text" ng-model="card.stk" class="input-sm">
-                <span class="glyphicon glyphicon-trash" ng-click="removeCard(card, $index)">Remove</span>
+
+            <div class="row" ng-repeat="card in wDeck.cards" ng-init="sCard = getCard(card)">
+                <span class="col-md-6" ng-bind="sCard.name"></span>
+                <input class="col-md-3" type="number" max="3" min="0" ng-model="card.stk" class="input-sm">
+                <span class="glyphicon glyphicon-trash clickable col-md-3"
+                      ng-click="removeCard(card, $index)">Remove</span>
             </div>
-            <div ng-show="checkUser(wDeck.use) || auth.restrictTo('admin')">
-                <span class="glyphicon glyphicon-plus-sign" ng-click="sCards = true">AddCards</span>
+
+            <div class="row" ng-show="checkUser(wDeck.use) || auth.restrictTo('admin')">
+
                 <button ng-click="save()" class="btn btn-info">Save</button>
-                <button ng-click="printSingle(wDeck)">PrintS</button>
-                <button ng-click="print(wDeck)">PrintM</button>
+                <div class="btn-group" ng-show="auth.restrictTo('admin')">
+                    <button class="btn btn-info" ng-click="printSingle(wDeck)">PrintS</button>
+                    <button class="btn btn-info" ng-click="print(wDeck)">PrintM</button>
+                </div>
+                <span class="glyphicon glyphicon-plus-sign clickable" ng-click="sCards = true">AddCards</span>
+
             </div>
+
             <div class="row" ng-show="sCards">
-                <input type="text" ng-model="search.$" placeholder="Search All">
+                <input class="form-control input-lg" type="text" ng-model="search.$" placeholder="Search All">
+                <button class="btn btn-info" ng-click="sCards = false; finish()">finish</button>
 
                 <div ng-repeat="card in cards |filter:search:strict" ng-click="card.added = !card.added">
                     <span class="col-md-6 hov-click" ng-bind="card.name"></span>
-                    <span class="col-md-6 " ng-init="checkAdded(card)">
+                    <span class="col-md-2" ng-bind="card.typ[0].name"></span>
+                    <span class="col-md-2" ng-bind="card.color[0].name"></span>
+                    <span class="col-md-2 " ng-init="checkAdded(card)">
                         <span class="glyphicon glyphicon-check" ng-show="card.added"></span>
                         <span class="glyphicon glyphicon-remove" ng-hide="card.added"></span>
                     </span>
                 </div>
                 <button class="btn btn-info" ng-click="sCards = false; finish()">finish</button>
             </div>
+
         </div>
 
     </div>
