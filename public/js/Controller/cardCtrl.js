@@ -1,14 +1,22 @@
-app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, Color, Edition) {
+app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, Color, Edition, cardPrintService) {
 
     $scope.cards = Card.getAll();
     $scope.colors = Color.getAll();
     $scope.typs = Typ.getAll();
     $scope.editions = Edition.getAll();
+    $scope.nCstyle = {};
+
+    $scope.setStyle = function (color) {
+        console.log('Test');
+        console.log(color);
+        var colors = cardPrintService.getColor(color.name);
+        console.log(colors);
+        $scope.nCstyle = {'background-color': colors.back, 'color': colors.font };
+    };
 
     $scope.nCard = new Card();
 
     $scope.showCard = function (card) {
-        console.log(card);
         var rarity;
         if ($scope.checkRar('co', card.rarity)) {
             rarity = 'b-com';
@@ -26,9 +34,9 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
         if (card.color[0].name === 'black' || card.color[0].name === 'grey') {
             white = "white-color";
         }
+        var colors = cardPrintService.getColor(card.color[0].name);
 
-
-        var html = "<div class='card-tool " + rarity + " " + white + "' style='background-color: " + card.color[0].name + "'> " +
+        var html = "<div class='card-tool " + rarity + " " + white + "' style='background-color: " + colors.back + "; color: " + colors.font + "'> " +
             "<span class='name'>" + card.name + "</span>" +
             "<span class='typ'>" + card.typ[0].name + "</span>" +
             "<span class='bild'>text.jpg</span>" +

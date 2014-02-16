@@ -83,7 +83,8 @@
                                         Colors <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li ng-repeat="color in colors"><a href="" ng-click="nCard.color = color"><span
+                                        <li ng-repeat="color in colors"><a href=""
+                                                                           ng-click="nCard.color = color; setStyle(color)"><span
                                                 ng-bind="color.name"></span></a></li>
                                     </ul>
                                 </div>
@@ -135,7 +136,7 @@
                     </div>
                 </div>
             <div class="col-md-6">
-                <div class="card" style="background-color: {{nCard.color.name}}"
+                <div class="card" ng-style="nCstyle"
                      ng-class="{'b-com': checkRar('co',nCard.rarity), 'b-uncom': checkRar('un',nCard.rarity) ,'b-rar': checkRar('ra',nCard.rarity) , 'b-epic': checkRar('ep',nCard.rarity)}">
                     <span class="name" ng-bind="nCard.name"></span>
                     <span class="typ" ng-bind="nCard.typ.name"></span>

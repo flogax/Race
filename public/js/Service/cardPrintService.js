@@ -5,6 +5,16 @@ common.service('cardPrintService', function ($q, $http, $location, $rootScope, C
 
     this.cards = null;
 
+    var colors = {
+        red: { back: 'red', font: 'black'},
+        green: {back: 'green', font: 'black'},
+        blue: {back: 'blue', font: 'black'},
+        black: {back: 'black', font: 'white'},
+        white: {back: 'white', font: 'black'},
+        purple: {back: 'purple', font: 'black'},
+        grey: {back: 'grey', font: 'white'}
+    };
+
     this.setCardsSingle = function (cards) {
 
         var tmp = [];
@@ -67,7 +77,7 @@ common.service('cardPrintService', function ($q, $http, $location, $rootScope, C
     };
 
     this.getColor = function (colorString) {
-        return '#fff';
+        return colors[colorString];
     }
 
 });
