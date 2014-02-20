@@ -222,6 +222,24 @@ div.row div.btn-group.col-md-3 button.btn.btn-default.dropdown-toggle {
     border-radius: inherit;
 }
 
+.card .pic img {
+
+    width: 100%;
+    height: 100%;
+}
+
+.card .pic img.sm {
+    border-radius: 1px;
+}
+
+.card .pic img.md {
+    border-radius: 3px;
+}
+
+.card .pic img.lg {
+    border-radius: 5px;
+}
+
 .card .werte {
     position: absolute;
     bottom: 1%;

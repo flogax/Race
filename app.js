@@ -76,6 +76,7 @@ app.all('/api/user/:id', api.listMethods("GET PUT DELETE"));
 //Card Service
 app.get('/api/card', api.findAll(Card, 'typ edition color'));
 app.get('/api/card/:id', api.find(Card, 'typ edition color'));
+app.get('/api/card/:id/image', api.getImage());
 app.post('/api/card', api.add(Card));
 app.put('/api/card/:id', api.update(Card, 'typ edition color'));
 app.delete('/api/card/:id', api.remove(Card));

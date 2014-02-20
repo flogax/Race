@@ -12,6 +12,7 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
     };
 
     $scope.nCard = new Card();
+    $scope.nCard.pic = 'x';
 
     $scope.showCard = function (card) {
         var rarity;
@@ -32,11 +33,14 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
             white = "white-color";
         }
         var colors = cardPrintService.getColor(card.color[0].name);
+        if (!card.pic) {
+            card.pic = 'x';
+        }
 
         var html = "<div class='card card-md card-inline" + rarity + " " + white + "' style='background-color: " + colors.back + "; color: " + colors.font + "'> " +
             "<span class='name'>" + card.name + "</span>" +
             "<span class='typ'>" + card.typ[0].name + "</span>" +
-            "<span class='pic'>text.jpg</span>" +
+            "<span class='pic'><img class='md' src='/api/card/" + card.pic + "/image' alt='Bild'></span>" +
             "<span class='edition'>" + card.edition.name + "</span>"
         if (card.live > -1) {
             html += "<span class='live'>" + card.live + "</span>";
@@ -58,20 +62,24 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
 
     };
 
-    $scope.newCard = function () {
+    $scope.addNewCard = function () {
+        console.log('err test3');
         var typ = $scope.nCard.typ;
         var color = $scope.nCard.color;
         var edi = $scope.nCard.edition;
+        console.log('err test4');
         $scope.nCard.typ = [typ.id];
         $scope.nCard.color = [color.id];
         $scope.nCard.edition = edi.id;
         $scope.nCard.hidden = true;
-
+        console.log('err test');
         if ($scope.nCard.id) {
+            console.log($scope.nCard);
             Card.save($scope.nCard);
         } else {
             Card.create($scope.nCard);
         }
+        console.log('err test2');
         $scope.nCard = new Card();
         $scope.cards = Card.getAll();
     };
@@ -93,9 +101,13 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
     };
 
     $scope.loadCard = function (card) {
-        $scope.nCard = card;
-        $scope.nCard.typ = card.typ[0];
-        $scope.nCard.color = card.color[0];
+        //console.log('test');
+        angular.copy(card, $scope.nCard);
+        //$scope.nCard = card;
+        angular.copy(card.typ[0], $scope.nCard.typ);
+        //$scope.nCard.typ = card.typ[0];
+        angular.copy(card.color[0], $scope.nCard.color);
+        //$scope.nCard.color = card.color[0];
     };
 
     $scope.checkTyp = function (toHide, typ) {
@@ -159,6 +171,10 @@ app.controller('CardCtrl', function ($scope, $location, AuthService, Card, Typ, 
         if (ver === -1) {
             return "";
         }
+    }
+
+    $scope.onFileSelect = function ($files) {
+        console.log('test: greift zu');
     }
 
 });

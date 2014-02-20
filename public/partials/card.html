@@ -6,18 +6,17 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="border">
-                        <button class="btn btn-default" ng-show="auth.restrictTo('admin')">Bild Upload</button>
-                        <span ng-show="auth.restrictTo('admin')">test/test/test.png</span><br
-                            ng-show="auth.restrictTo('admin')"/>
-
+                        <input type="file" ng-file-select="onFileSelect($files)" class="input-file">
+                        <button type="button" class="btn btn-default input-file-overlay">Bild Hochladen</button>
 
                         <h2>Create a New Card</h2>
 
-                        <form name="form" class="form-horizontal form-group" novalidate ng-submit="newCard()">
+                        <form name="form" class="form-horizontal form-group" novalidate ng-submit="addNewCard()">
                             <input class="form-control" type="text" name="cardname" placeholder="Kartenname"
                                    ng-model="nCard.name" required>
                             <input class="form-control" type="NUMBER" min="0" ng-model="nCard.cost" placeholder="Kosten"
                                    required>
+                            <input class="form-control" type="text" ng-model="nCard.pic" placeholder="Bilde Name">
                             <!-- Rarity Auswahl -->
                             <div class="row">
                                 <div class="btn-group col-md-3">
@@ -136,17 +135,22 @@
                     </div>
                 </div>
             <div class="col-md-6">
-                <div class="card" ng-style="nCstyle"
+                <div class="card card-lg card-absolut" ng-style="nCstyle"
                      ng-class="{'b-com': checkRar('co',nCard.rarity), 'b-uncom': checkRar('un',nCard.rarity) ,'b-rar': checkRar('ra',nCard.rarity) , 'b-epic': checkRar('ep',nCard.rarity)}">
                     <span class="name" ng-bind="nCard.name"></span>
                     <span class="typ" ng-bind="nCard.typ.name"></span>
-                    <span ng-bind="nCard.edition.name"></span>
+                    <span class="pic"><img class="lg" ng-src="/api/card/{{nCard.pic}}/image" alt="Bild "></span>
+                    <span class="edition" ng-bind="nCard.edition.name"></span>
                     <span class="live" ng-bind="nCard.live"></span>
                     <span class="cost" ng-bind="nCard.cost"></span>
-                    <span ng-bind="nCard.ability"> </span>
-                    <span ng-bind="nCard.text"> </span>
-                    <span ng-bind="nCard.atk"> </span>
-                    <span ng-bind="nCard.ver"> </span>
+                    <span class="info">
+                    <span class="ability" ng-bind="nCard.ability"> </span>
+                    <span class="txt" ng-bind="nCard.text"> </span>
+                    </span>
+                    <span class="werte">
+                        <span ng-bind="nCard.atk"> </span>
+                        <span ng-bind="nCard.ver"> </span>
+                    </span>
                 </div>
             </div>
             </div>
@@ -190,8 +194,8 @@
                 </div>
 
                 <div class="row hov show-card col-md-4" ng-repeat="card in cards | filter:search:strict "
-                     ng-click="newCard = true; loadCard(card)" tooltip-placement="bottom"
-                     tooltip-html-unsafe="{{showCard(card)}}"
+                     ng-click="loadCard(card)" tooltip-placement="bottom"
+                     tooltip-html-unsafe="{{showCard(card);}}"
                      tooltip-popup-delay='1000'>
                     <div><span ng-bind="card.name"></span></div>
                 </div>

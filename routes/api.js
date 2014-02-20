@@ -2,6 +2,7 @@
 
 var Q = require('q');
 var bcrypt = require("bcryptjs");
+var path = require('path');
 
 var SALT_WORK_FACTOR = 10;
 
@@ -104,6 +105,18 @@ var api = {
         return function (req, res) {
             res.writeHeader(405, { Allow: methods });
             res.end();
+        };
+    },
+
+    getImage: function () {
+        return function (req, res) {
+            if (!req.params.id) {
+                var image = path.resolve('img/x.png');
+                res.download(image);
+            } else {
+                var image = path.resolve('img/' + req.params.id + '.png');
+                res.download(image);
+            }
         };
     }
 };
